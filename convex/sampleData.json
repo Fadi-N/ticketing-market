@@ -8,7 +8,8 @@
     "totalTickets": 1200,
     "price": 130.00,
     "salesStart": 1724816000000,
-    "salesEnd": 1729395200000
+    "salesEnd": 1729395200000,
+    "userId": "user_j57207jtrzt3qbhqhty7tz4t557aynfs"
   },
   {
     "name": "UEFA Champions League Final",
@@ -19,7 +20,8 @@
     "totalTickets": 50000,
     "price": 350.00,
     "salesStart": 1723224000000,
-    "salesEnd": 1730136000000
+    "salesEnd": 1730136000000,
+    "userId": "user_j57207jtrzt3qbhqhty7tz4t557aynfs"
   },
   {
     "name": "Broadway Musical: The Phantom Returns",
@@ -30,7 +32,8 @@
     "totalTickets": 800,
     "price": 220.00,
     "salesStart": 1725520000000,
-    "salesEnd": 1731568000000
+    "salesEnd": 1731568000000,
+    "userId": "user_j57207jtrzt3qbhqhty7tz4t557aynfs"
   },
   {
     "name": "Tech Expo 2025",
@@ -41,7 +44,8 @@
     "totalTickets": 10000,
     "price": 45.00,
     "salesStart": 1722632000000,
-    "salesEnd": 1731704000000
+    "salesEnd": 1731704000000,
+    "userId": "user_j57207jtrzt3qbhqhty7tz4t557aynfs"
   },
   {
     "name": "International Food Festival",
@@ -52,7 +56,8 @@
     "totalTickets": 5000,
     "price": 25.00,
     "salesStart": 1730112000000,
-    "salesEnd": 1733740800000
+    "salesEnd": 1733740800000,
+    "userId": "user_j57207jtrzt3qbhqhty7tz4t557aynfs"
   },
   {
     "name": "Rock Legends Reunion",
@@ -63,7 +68,8 @@
     "totalTickets": 30000,
     "price": 180.00,
     "salesStart": 1730680000000,
-    "salesEnd": 1734395200000
+    "salesEnd": 1734395200000,
+    "userId": "user_j57207jtrzt3qbhqhty7tz4t557aynfs"
   },
   {
     "name": "Nobel Prize Lecture Series",
@@ -74,7 +80,8 @@
     "totalTickets": 300,
     "price": 100.00,
     "salesStart": 1732544000000,
-    "salesEnd": 1735827200000
+    "salesEnd": 1735827200000,
+    "userId": "user_j57207jtrzt3qbhqhty7tz4t557aynfs"
   },
   {
     "name": "Comic Art Expo",
@@ -85,7 +92,8 @@
     "totalTickets": 1500,
     "price": 30.00,
     "salesStart": 1733976000000,
-    "salesEnd": 1736568000000
+    "salesEnd": 1736568000000,
+    "userId": "user_j57207jtrzt3qbhqhty7tz4t557aynfs"
   },
   {
     "name": "Modern Dance Gala",
@@ -96,7 +104,8 @@
     "totalTickets": 500,
     "price": 95.00,
     "salesStart": 1733248000000,
-    "salesEnd": 1737654400000
+    "salesEnd": 1737654400000,
+    "userId": "user_j57207jtrzt3qbhqhty7tz4t557aynfs"
   },
   {
     "name": "Vintage Car Rally Exhibition",
@@ -107,6 +116,7 @@
     "totalTickets": 200,
     "price": 60.00,
     "salesStart": 1736408000000,
-    "salesEnd": 1738913600000
+    "salesEnd": 1738913600000,
+    "userId": "user_j57207jtrzt3qbhqhty7tz4t557aynfs"
   }
 ]
