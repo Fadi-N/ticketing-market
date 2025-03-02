@@ -7,8 +7,7 @@ import {api} from "@/convex/_generated/api";
 
 const SyncUserWithConvex = () => {
     const {user} = useUser();
-    console.log("=======")
-    console.log(user);
+
     const updateUser = useMutation(api.users.updateUser);
 
     useEffect(() => {
