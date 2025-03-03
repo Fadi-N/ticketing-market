@@ -4,13 +4,7 @@ import React from 'react';
 import {useQuery} from "convex/react";
 import {api} from "@/convex/_generated/api";
 import Spinner from "@/components/Spinner";
-import {
-    Card,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
+import EventCard from "@/components/EventCard";
 
 
 const EventList = () => {
@@ -30,25 +24,19 @@ const EventList = () => {
     return (
         <div>
             <p>Upcoming Events</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {upcomingEvents.map((event) => (
-                    <React.Fragment key={event._id}>
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>{event.name}</CardTitle>
-                                <CardDescription>{event.description}</CardDescription>
-                            </CardHeader>
-                            <CardFooter>
-                                <div>
-                                    <p>{event.eventDate}</p>
-                                    <p>{event.location}</p>
-                                    <p>{event.price} USD</p>
-                                </div>
-                            </CardFooter>
-                        </Card>
-                    </React.Fragment>
-                ))}
-            </div>
+            {upcomingEvents.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {upcomingEvents.map((event) => (
+                            <EventCard key={event._id} eventId={event._id}/>
+                    ))}
+                </div>
+            ) : (
+                <div>
+                    <p>No upcoming events</p>
+                    <p>Check back later for new events</p>
+                </div>
+            )}
+
         </div>
     );
 };
