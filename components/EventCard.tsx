@@ -9,6 +9,7 @@ import {api} from "@/convex/_generated/api";
 import {useRouter} from "next/navigation";
 import {Button} from "@/components/ui/button";
 import {CalendarDays, MapPin, Ticket, TicketCheck} from "lucide-react";
+import PurchaseTicket from "@/components/PurchaseTicket";
 
 
 interface EventCardProps {
@@ -62,7 +63,9 @@ const EventCard = ({eventId}: EventCardProps) => {
         if (queuePosition) {
             return (
                 <>
-                    <p>PURCHASE BTN</p>
+                    {queuePosition.status === "offered" && (
+                        <PurchaseTicket eventId={eventId} />
+                    )}
                     {renderQueuePosition()}
                     {queuePosition.status === "expired" && (
                         <>
@@ -77,7 +80,10 @@ const EventCard = ({eventId}: EventCardProps) => {
     }
 
     return (
-        <Card className="flex flex-col justify-between">
+        <Card
+            className="flex flex-col justify-between"
+            onClick={()=>router.push(`/event/${event._id}`)}
+        >
             <CardHeader className="md:min-h-44 lg:min-h-72">
                 <h3>{event.name}</h3>
                 <h5>{event.description}</h5>

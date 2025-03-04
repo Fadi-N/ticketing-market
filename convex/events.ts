@@ -1,6 +1,7 @@
-import {query} from "@/convex/_generated/server";
+import {mutation, query} from "@/convex/_generated/server";
 import {v} from "convex/values";
-import {TICKET_STATUS, WAITING_LIST_STATUS} from "@/convex/constants";
+import {DURATIONS, TICKET_STATUS, WAITING_LIST_STATUS} from "@/convex/constants";
+import {internal} from "@/convex/_generated/api";
 
 export const get = query({
     args: {},
@@ -40,12 +41,99 @@ export const getEventAvailability = query({
 
         const totalReserved = purchasedCount + activeOffers;
 
-        return{
+        return {
             isSoldOut: totalReserved >= event.totalTickets,
             totalTickets: event.totalTickets,
             purchasedCount,
             activeOffers,
             remainingTickets: Math.max(0, event.totalTickets - totalReserved)
+        }
+    }
+})
+
+export const checkAvailability = query({
+    args: {eventId: v.id("events")},
+    handler: async (ctx, {eventId}) => {
+        const event = await ctx.db.get(eventId);
+        if (!event) throw new Error("Event not found");
+
+        const purchasedCount = await ctx.db
+            .query("tickets")
+            .withIndex("by_event", (query) => query.eq("eventId", eventId))
+            .collect()
+            .then((tickets) => tickets.filter(ticket => ticket.status === TICKET_STATUS.VALID || ticket.status === TICKET_STATUS.USED).length)
+
+        const now = Date.now();
+        const activeOffers = await ctx.db
+            .query("waitingList")
+            .withIndex("by_event_status", (query) => query.eq("eventId", eventId).eq("status", WAITING_LIST_STATUS.OFFERED))
+            .collect()
+            .then((entries) => entries.filter(entry => (entry.offerExpiredAt ?? 0) > now).length)
+
+        const availableSpots = event.totalTickets - (purchasedCount + activeOffers);
+
+        return {
+            available: availableSpots > 0,
+            availableSpots,
+            totalTickets: event.totalTickets,
+            purchasedCount,
+            activeOffers
+        }
+    }
+})
+
+export const joinWaitingList = mutation({
+    args: {eventId: v.id("events"), userId: v.string()},
+    handler: async (ctx, {eventId, userId}) => {
+        const existingEntry = await ctx.db
+            .query("waitingList")
+            .withIndex("by_user_event", (query) => query.eq("userId", userId).eq("eventId", eventId))
+            .filter((query) => query.neq(query.field("status"), WAITING_LIST_STATUS.EXPIRED))
+            .first()
+
+        if (existingEntry) {
+            throw new Error("Already in waiting list for this event");
+        }
+
+        const event = await ctx.db.get(eventId);
+        if (!event) throw new Error("Event not found");
+
+        const {available} = await checkAvailability(ctx, {eventId});
+
+        const now = Date.now();
+
+        if (available) {
+            const waitingListId = await ctx.db.insert("waitingList", {
+                eventId,
+                userId,
+                status: WAITING_LIST_STATUS.OFFERED,
+                offerExpiredAt: now + DURATIONS.TICKET_OFFER
+            })
+
+            await ctx.scheduler.runAfter(
+                DURATIONS.TICKET_OFFER,
+                internal.waitingList.expireOffer,
+                {
+                    waitingListId,
+                    eventId
+                }
+            )
+        } else {
+            await ctx.db.insert("waitingList", {
+                eventId,
+                userId,
+                status: WAITING_LIST_STATUS.WAITING
+            })
+        }
+
+        return {
+            success: true,
+            status: available
+                ? WAITING_LIST_STATUS.OFFERED
+                : WAITING_LIST_STATUS.WAITING,
+            message: available
+                ? "Ticket offered - you have 15 minutes to purchase"
+                : "Added to waiting list - you'll be notified when a ticket becomes available",
         }
     }
 })

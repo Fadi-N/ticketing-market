@@ -5,6 +5,7 @@ import {ClerkProvider} from "@clerk/nextjs";
 import {ConvexClientProvider} from "@/components/ConvexClientProvider";
 import Navbar from "@/components/Navbar";
 import SyncUserWithConvex from "@/components/SyncUserWithConvex";
+import {Toaster} from "@/components/ui/sonner";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -33,7 +34,10 @@ export default function RootLayout({
             <ClerkProvider>
                 <Navbar/>
                 <SyncUserWithConvex/>
-                {children}
+                <div className="container mx-auto">
+                    {children}
+                </div>
+                <Toaster />
             </ClerkProvider>
         </ConvexClientProvider>
         </body>
