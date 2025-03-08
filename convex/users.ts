@@ -45,3 +45,33 @@ export const updateUser = mutation({
         return newUserId;
     }
 })
+
+export const getUsersStripeConnectId = query({
+    args: {userId: v.string()},
+    handler: async (ctx, args) => {
+        const user = await ctx.db
+            .query("users")
+            .filter((query) => query.eq(query.field("userId"), args.userId))
+            .filter((query) => query.neq(query.field("stripeConnectId"), undefined))
+            .first()
+
+        return user?.stripeConnectId;
+    }
+})
+
+export const updateOrCreateUserStripeConnectId = mutation({
+    args: {userId: v.string(), stripeConnectId: v.string()},
+    handler: async (ctx, args) => {
+        const user = await ctx.db
+            .query("users")
+            .withIndex("by_user_id", (query) => query.eq("userId", args.userId))
+            .first()
+
+        if (!user) {
+            throw Error("User not found");
+        }
+
+        await ctx.db.patch(user._id, {stripeConnectId: args.stripeConnectId})
+    }
+})
+

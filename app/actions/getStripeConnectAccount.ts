@@ -1,0 +1,25 @@
+"use server"
+
+import {ConvexHttpClient} from "convex/browser";
+import {auth} from "@clerk/nextjs/server";
+import {api} from "@/convex/_generated/api";
+
+if (!process.env.NEXT_PUBLIC_CONVEX_URL) {
+    throw new Error("No NEXT_PUBLIC_CONVEX_URL set yet");
+}
+
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL);
+
+export async function getStripeConnectAccount() {
+    const {userId} = await auth();
+
+    if (!userId) {
+        throw new Error("User ID is required");
+    }
+
+    const stripeConnectId = await convex.query(api.users.getUsersStripeConnectId, {userId});
+
+    return {
+        stripeConnectId: stripeConnectId || null,
+    }
+}
