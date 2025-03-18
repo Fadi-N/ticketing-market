@@ -25,11 +25,11 @@ export async function createStripeConnectCustomer() {
     // Check if user already has a connect account
     const existingStripeConnectId = await convex.query(api.users.getUsersStripeConnectId, {userId});
 
-    if (!existingStripeConnectId) {
+    if (existingStripeConnectId) {
         return {account: existingStripeConnectId};
     }
 
-    // Create ne connect account
+    // Create new connect account
     const account = await stripe.accounts.create({
         type: "express", capabilities: {
             card_payments: {requested: true},
