@@ -12,7 +12,7 @@ import {useRouter} from "next/navigation";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
-import {CalendarPlus, Loader2} from "lucide-react";
+import {Loader2} from "lucide-react";
 import {Button} from "@/components/ui/button";
 
 const formSchema = z.object({
@@ -87,6 +87,20 @@ const EventForm = ({mode, initialData}: EventFormProps) => {
                     })
 
                     router.push(`/event/${eventId}`);
+                } else {
+                    if (!initialData) {
+                        throw new Error("Initial event data is required for updates");
+                    }
+
+                    await updateEvent({
+                        ...values,
+                        eventId: initialData._id,
+                        eventDate: values.eventDate.getTime(),
+                        salesStart: values.salesStart.getTime(),
+                        salesEnd: values.salesEnd.getTime()
+                    })
+
+                    router.push(`/event/${initialData._id}`);
                 }
             } catch (error) {
                 console.error("Failed to handle event:", error);
