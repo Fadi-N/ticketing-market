@@ -33,32 +33,32 @@ const EventPage = () => {
 
     return (
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 p-8 gap-4">
-            <div className="flex flex-col space-y-4">
-                <EventCard key={event._id} eventId={event._id}/>
-                <Card>
+        <div className="flex flex-col space-y-4 p-8">
+            <EventCard key={event._id} eventId={event._id}/>
+            <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 space-x-4">
+                <Card className="flex-1">
                     <CardContent className="flex items-center space-x-4 pt-4">
-                        <Info width={40} height={40}/>
                         <div className="flex flex-col space-y-4">
-                            <h5>Event information</h5>
+                            <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Event information</div>
                             <div>
-                                <p>
-                                    • Please arrive 30 min before the event starts.
-                                </p>
-                                <p>
-                                    • Tickets are non-refundable.
-                                </p>
-                                <p>
-                                    • Age restriction: 18+
-                                </p>
+                                <div className="flex items-center space-x-2">
+                                    <Info width={20} height={20}/>
+                                    <p>Please arrive 30 min before the event starts.</p>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                    <Info width={20} height={20}/>
+                                    <p>Tickets are non-refundable.</p>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                    <Info width={20} height={20}/>
+                                    <p>Age restriction: 18+</p>
+                                </div>
                             </div>
                         </div>
                     </CardContent>
                 </Card>
-            </div>
-            <div>
-                <Card>
-                    <CardContent>
+                <Card className="flex-1">
+                    <CardContent className="flex flex-col lg:flex-row space-x-2 pt-4">
                         {user ? (
                             <>
                                 <JoinQueue

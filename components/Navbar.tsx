@@ -9,9 +9,9 @@ const Navbar = () => {
         <>
             <nav className="navbar flex justify-between items-center p-8 shadow">
                 <Link href="/">
-                    <h4>
+                    <div className="text-xl lg:text-2xl xl:text-3xl font-medium">
                         Ticket Marketing
-                    </h4>
+                    </div>
                 </Link>
                 <div className="w-1/3">
                     <SearchBar/>
@@ -19,7 +19,12 @@ const Navbar = () => {
                 <div className="flex items-center space-x-4">
                     <SignedIn>
                         <Link href="/tickets" className="border-e">
-                            <Button className="text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl" variant="link">My tickets</Button>
+                            <Button
+                                className="text-base lg:text-lg xl:text-xl"
+                                variant="link"
+                            >
+                                My tickets
+                            </Button>
                         </Link>
                         <UserButton/>
                     </SignedIn>

@@ -100,9 +100,9 @@ const SellerDashboard = () => {
                 <Card>
                     <CardContent className="pt-4">
                         <div className="flex flex-col space-y-4">
-                            <h5>Get those event tickets sold, no sweat!</h5>
-                            <h6>List ‘em up for sale and keep everything under control with a few easy clicks—your
-                                events, your rules!</h6>
+                            <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Get those event tickets sold, no sweat!</div>
+                            <div className="text-base lg:text-lg xl:text-xl text-gray-400">List ‘em up for sale and keep everything under control with a few easy clicks—your
+                                events, your rules!</div>
                             <div className="flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4">
                                 <Button className="w-full"
                                         onClick={() => router.push(`/seller/new-event`)}>
@@ -123,9 +123,9 @@ const SellerDashboard = () => {
                 <Card>
                     <CardContent className="pt-4">
                         <div className="flex flex-col space-y-4">
-                            <h5>Begin Earning!</h5>
-                            <h6>Create your seller account and start collecting secure payments via Stripe with
-                                ease.</h6>
+                            <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Begin Earning!</div>
+                            <div className="text-base lg:text-lg xl:text-xl text-gray-400">Create your seller account and start collecting secure payments via Stripe with
+                                ease.</div>
                             <div>
                                 <Button className="w-full"
                                         onClick={handleCreateSellerAccount}>
@@ -145,7 +145,7 @@ const SellerDashboard = () => {
                             <CardContent className="flex lg:flex-col justify-between h-full">
                                 <div className="flex flex-col pt-4 space-y-10">
                                     <div className="flex flex-col space-y-4">
-                                        <h5>Account status</h5>
+                                        <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Account status</div>
                                         <div className="flex items-center space-x-2">
                                             <div
                                                 className={`w-3 h-3 rounded-full ${accountStatus.isActive ? "bg-green-500" : "bg-yellow-500"}`}/>
@@ -153,7 +153,7 @@ const SellerDashboard = () => {
                                         </div>
                                     </div>
                                     <div className="flex flex-col space-y-4">
-                                        <h5>Payment capability</h5>
+                                        <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Payment capability</div>
                                         <div>
                                             <div className="flex items-center space-x-1">
                                                 {accountStatus.chargesEnabled
@@ -204,13 +204,13 @@ const SellerDashboard = () => {
                         <Card className="flex-1">
                             <CardContent className="flex flex-col justify-between h-full pt-4">
                                 <div className="flex flex-col space-y-4">
-                                    <h5>Required Information</h5>
+                                    <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Required Information</div>
                                     <div className="flex flex-col space-y-6">
                                         <div>
                                             <div className="grid grid-cols-1 gap-4">
                                                 {accountStatus.requirements.currently_due.length > 0 && (
                                                     <>
-                                                        <h6>Action Required</h6>
+                                                        <div className="text-base lg:text-lg xl:text-xl text-gray-400">Action Required</div>
                                                         <ul>
                                                             {accountStatus.requirements.currently_due.map((req) => (
                                                                 <div key={req} className="flex items-center space-x-2">
@@ -229,7 +229,7 @@ const SellerDashboard = () => {
                                             <div className="grid grid-cols-1 gap-4">
                                                 {accountStatus.requirements.eventually_due.length > 0 && (
                                                     <>
-                                                        <h6>Eventually Needed</h6>
+                                                        <div className="text-base lg:text-lg xl:text-xl text-gray-400">Eventually Needed</div>
                                                         <ul>
                                                             {accountStatus.requirements.eventually_due.map(
                                                                 (req) => (
@@ -266,13 +266,13 @@ const SellerDashboard = () => {
             {accountCreatePending && (
                 <div className="flex flex-col items-center justify-center space-x-2">
                     <Spinner/>
-                    <h5>Creating your seller account...</h5>
+                    <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Creating your seller account...</div>
                 </div>
             )}
             {accountLinkCreatePending && (
                 <div className="flex flex-col items-center justify-center space-x-2">
                     <Spinner/>
-                    <h5>Preparing account setup...</h5>
+                    <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Preparing account setup...</div>
                 </div>
             )}
 

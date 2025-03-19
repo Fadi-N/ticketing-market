@@ -114,10 +114,10 @@ const EventForm = ({mode, initialData}: EventFormProps) => {
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <Card>
                     <CardHeader className="border-b">
-                        <CardTitle>{mode === "create" ? "Create event" : "Edit event"}</CardTitle>
-                        <CardDescription>{mode === "create" ? "Create your event" : "Update your event details"}</CardDescription>
+                        <div className="text-xl lg:text-2xl xl:text-3xl font-medium">{mode === "create" ? "Create event" : "Edit event"}</div>
+                        <div className="text-base lg:text-lg xl:text-xl text-gray-400">{mode === "create" ? "Create your event" : "Update your event details"}</div>
                     </CardHeader>
-                    <CardContent className="pt-4">
+                    <CardContent className="flex flex-col space-y-12 pt-4">
                         <div className="flex flex-col space-y-4">
                             <FormField
                                 control={form.control}
@@ -297,25 +297,24 @@ const EventForm = ({mode, initialData}: EventFormProps) => {
                                     </FormItem>
                                 )}
                             />
-
-                            <Button
-                                className="w-full"
-                                type="submit"
-                                onSubmit={onSubmit}
-                                disabled={isPending}
-                            >
-                                {isPending ? (
-                                    <>
-                                        <Loader2 className="animate-spin" width={20} height={20}/>
-                                        {mode === "create" ? "Creating Event..." : "Updating Event..."}
-                                    </>
-                                ) : mode === "create" ? (
-                                    "Create Event"
-                                ) : (
-                                    "Update Event"
-                                )}
-                            </Button>
                         </div>
+                        <Button
+                            className="w-full"
+                            type="submit"
+                            onSubmit={onSubmit}
+                            disabled={isPending}
+                        >
+                            {isPending ? (
+                                <>
+                                    <Loader2 className="animate-spin" width={20} height={20}/>
+                                    {mode === "create" ? "Creating Event..." : "Updating Event..."}
+                                </>
+                            ) : mode === "create" ? (
+                                "Create Event"
+                            ) : (
+                                "Update Event"
+                            )}
+                        </Button>
                     </CardContent>
                 </Card>
             </form>

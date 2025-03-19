@@ -10,6 +10,7 @@ import {useRouter} from "next/navigation";
 import {Button} from "@/components/ui/button";
 import {CalendarDays, MapPin, Ticket, TicketCheck} from "lucide-react";
 import PurchaseTicket from "@/components/PurchaseTicket";
+import {Badge} from "@/components/ui/badge";
 
 
 interface EventCardProps {
@@ -53,7 +54,8 @@ const EventCard = ({eventId}: EventCardProps) => {
 
         if (userTicket) {
             return (
-                <Button className="w-full" variant="secondary" onClick={() => router.push(`/tickets/${userTicket._id}`)}>
+                <Button className="w-full" variant="secondary"
+                        onClick={() => router.push(`/tickets/${userTicket._id}`)}>
                     <TicketCheck width={20} height={20}/>
                     Peek at Your Golden Ticket!
                 </Button>
@@ -64,7 +66,7 @@ const EventCard = ({eventId}: EventCardProps) => {
             return (
                 <>
                     {queuePosition.status === "offered" && (
-                        <PurchaseTicket eventId={eventId} />
+                        <PurchaseTicket eventId={eventId}/>
                     )}
                     {renderQueuePosition()}
                     {queuePosition.status === "expired" && (
@@ -81,18 +83,20 @@ const EventCard = ({eventId}: EventCardProps) => {
 
     return (
         <Card
-            className="flex flex-col justify-between"
-            onClick={()=>router.push(`/event/${event._id}`)}
+            className="flex flex-col justify-between hover:cursor-pointer transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
+            onClick={() => router.push(`/event/${event._id}`)}
         >
-            <CardHeader className="md:min-h-44 lg:min-h-72">
-                <h3>{event.name}</h3>
-                <h5>{event.description}</h5>
-            </CardHeader>
-            <CardContent className="flex flex-col space-y-5 lg:space-y-10">
-                <div
-                    className="flex flex-col justify-between space-y-2 text-xs md:text-sm lg:text-base xl:text-lg 2xl:text-xl md:min-h-24 lg:min-h-32">
+            <CardContent className="flex flex-col h-full justify-between pt-4">
+                <div className="flex flex-col space-y-4 mb-12">
+                    <div className="text-xl lg:text-2xl xl:text-3xl font-medium">{event.name}</div>
+                    <div>
+                        <Badge className="rounded-full bg-orange-500">{event.category}</Badge>
+                    </div>
+                    <div className="text-base lg:text-lg xl:text-xl text-gray-400">{event.description}</div>
+                </div>
+                <div className="flex flex-col space-y-2">
                     <div className="flex items-center space-x-2">
-                        <CalendarDays width={20} height={20}/>
+                        <CalendarDays className="text-green-600" width={20} height={20}/>
                         <p>
                             {new Date(event.eventDate).toLocaleDateString()}
                             {" "}
@@ -100,18 +104,17 @@ const EventCard = ({eventId}: EventCardProps) => {
                         </p>
                     </div>
                     <div className="flex items-center space-x-2">
-                        <MapPin width={20} height={20}/>
+                        <MapPin className="text-red-600" width={20} height={20}/>
                         <p>{event.location}</p>
                     </div>
                     <div className="flex items-center space-x-2">
-                        <Ticket width={20} height={20}/>
+                        <Ticket className="text-blue-600" width={20} height={20}/>
                         <p>
                             {availability.totalTickets - availability.purchasedCount} /{""} {availability.totalTickets} available
                         </p>
                     </div>
                 </div>
 
-                <h3>$ {event.price.toFixed(2)}</h3>
                 {!isPastEvent && renderTicketStatus()}
             </CardContent>
         </Card>
