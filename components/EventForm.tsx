@@ -14,6 +14,7 @@ import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
 import {Loader2} from "lucide-react";
 import {Button} from "@/components/ui/button";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 
 const formSchema = z.object({
     name: z.string().min(1, "Event name is required"),
@@ -111,204 +112,212 @@ const EventForm = ({mode, initialData}: EventFormProps) => {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-                <div>
-                    <FormField
-                        control={form.control}
-                        name="name"
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel>Event name</FormLabel>
-                                <FormControl>
-                                    <Input {...field} />
-                                </FormControl>
-                                <FormMessage/>
-                            </FormItem>
-                        )}
-                    />
+                <Card>
+                    <CardHeader className="border-b">
+                        <CardTitle>{mode === "create" ? "Create event" : "Edit event"}</CardTitle>
+                        <CardDescription>{mode === "create" ? "Create your event" : "Update your event details"}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="pt-4">
+                        <div className="flex flex-col space-y-4">
+                            <FormField
+                                control={form.control}
+                                name="name"
+                                render={({field}) => (
+                                    <FormItem>
+                                        <FormLabel>Event name</FormLabel>
+                                        <FormControl>
+                                            <Input {...field} />
+                                        </FormControl>
+                                        <FormMessage/>
+                                    </FormItem>
+                                )}
+                            />
 
-                    <FormField
-                        control={form.control}
-                        name="category"
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel>Event category</FormLabel>
-                                <FormControl>
-                                    <Input {...field} />
-                                </FormControl>
-                                <FormMessage/>
-                            </FormItem>
-                        )}
-                    />
+                            <FormField
+                                control={form.control}
+                                name="category"
+                                render={({field}) => (
+                                    <FormItem>
+                                        <FormLabel>Event category</FormLabel>
+                                        <FormControl>
+                                            <Input {...field} />
+                                        </FormControl>
+                                        <FormMessage/>
+                                    </FormItem>
+                                )}
+                            />
 
-                    <FormField
-                        control={form.control}
-                        name="description"
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel>Event description</FormLabel>
-                                <FormControl>
-                                    <Textarea {...field} />
-                                </FormControl>
-                                <FormMessage/>
-                            </FormItem>
-                        )}
-                    />
+                            <FormField
+                                control={form.control}
+                                name="description"
+                                render={({field}) => (
+                                    <FormItem>
+                                        <FormLabel>Event description</FormLabel>
+                                        <FormControl>
+                                            <Textarea {...field} />
+                                        </FormControl>
+                                        <FormMessage/>
+                                    </FormItem>
+                                )}
+                            />
 
-                    <FormField
-                        control={form.control}
-                        name="location"
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel>Event location</FormLabel>
-                                <FormControl>
-                                    <Input {...field} />
-                                </FormControl>
-                                <FormMessage/>
-                            </FormItem>
-                        )}
-                    />
+                            <FormField
+                                control={form.control}
+                                name="location"
+                                render={({field}) => (
+                                    <FormItem>
+                                        <FormLabel>Event location</FormLabel>
+                                        <FormControl>
+                                            <Input {...field} />
+                                        </FormControl>
+                                        <FormMessage/>
+                                    </FormItem>
+                                )}
+                            />
 
-                    <FormField
-                        control={form.control}
-                        name="eventDate"
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel>Event Date</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        type="date"
-                                        {...field}
-                                        onChange={(e) => {
-                                            field.onChange(
-                                                e.target.value ? new Date(e.target.value) : null
-                                            );
-                                        }}
-                                        value={
-                                            field.value
-                                                ? new Date(field.value).toISOString().split("T")[0]
-                                                : ""
-                                        }
-                                    />
-                                </FormControl>
-                                <FormMessage/>
-                            </FormItem>
-                        )}
-                    />
+                            <FormField
+                                control={form.control}
+                                name="eventDate"
+                                render={({field}) => (
+                                    <FormItem>
+                                        <FormLabel>Event Date</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                type="date"
+                                                {...field}
+                                                onChange={(e) => {
+                                                    field.onChange(
+                                                        e.target.value ? new Date(e.target.value) : null
+                                                    );
+                                                }}
+                                                value={
+                                                    field.value
+                                                        ? new Date(field.value).toISOString().split("T")[0]
+                                                        : ""
+                                                }
+                                            />
+                                        </FormControl>
+                                        <FormMessage/>
+                                    </FormItem>
+                                )}
+                            />
 
-                    <FormField
-                        control={form.control}
-                        name="price"
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel>Price per Ticket</FormLabel>
-                                <FormControl>
-                                    <div className="relative">
+                            <FormField
+                                control={form.control}
+                                name="price"
+                                render={({field}) => (
+                                    <FormItem>
+                                        <FormLabel>Price per Ticket</FormLabel>
+                                        <FormControl>
+                                            <div className="relative">
                                         <span className="absolute left-2 top-1/2 -translate-y-1/2">
                                           $
                                         </span>
-                                        <Input
-                                            type="number"
-                                            {...field}
-                                            onChange={(e) => field.onChange(Number(e.target.value))}
-                                            className="pl-6"
-                                        />
-                                    </div>
-                                </FormControl>
-                                <FormMessage/>
-                            </FormItem>
-                        )}
-                    />
+                                                <Input
+                                                    type="number"
+                                                    {...field}
+                                                    onChange={(e) => field.onChange(Number(e.target.value))}
+                                                    className="pl-6"
+                                                />
+                                            </div>
+                                        </FormControl>
+                                        <FormMessage/>
+                                    </FormItem>
+                                )}
+                            />
 
-                    <FormField
-                        control={form.control}
-                        name="totalTickets"
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel>Total Tickets Available</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        type="number"
-                                        {...field}
-                                        onChange={(e) => field.onChange(Number(e.target.value))}
-                                    />
-                                </FormControl>
-                                <FormMessage/>
-                            </FormItem>
-                        )}
-                    />
+                            <FormField
+                                control={form.control}
+                                name="totalTickets"
+                                render={({field}) => (
+                                    <FormItem>
+                                        <FormLabel>Total Tickets Available</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                type="number"
+                                                {...field}
+                                                onChange={(e) => field.onChange(Number(e.target.value))}
+                                            />
+                                        </FormControl>
+                                        <FormMessage/>
+                                    </FormItem>
+                                )}
+                            />
 
-                    <FormField
-                        control={form.control}
-                        name="salesStart"
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel>Event sales start</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        type="date"
-                                        {...field}
-                                        onChange={(e) => {
-                                            field.onChange(
-                                                e.target.value ? new Date(e.target.value) : null
-                                            );
-                                        }}
-                                        value={
-                                            field.value
-                                                ? new Date(field.value).toISOString().split("T")[0]
-                                                : ""
-                                        }
-                                    />
-                                </FormControl>
-                                <FormMessage/>
-                            </FormItem>
-                        )}
-                    />
+                            <FormField
+                                control={form.control}
+                                name="salesStart"
+                                render={({field}) => (
+                                    <FormItem>
+                                        <FormLabel>Event sales start</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                type="date"
+                                                {...field}
+                                                onChange={(e) => {
+                                                    field.onChange(
+                                                        e.target.value ? new Date(e.target.value) : null
+                                                    );
+                                                }}
+                                                value={
+                                                    field.value
+                                                        ? new Date(field.value).toISOString().split("T")[0]
+                                                        : ""
+                                                }
+                                            />
+                                        </FormControl>
+                                        <FormMessage/>
+                                    </FormItem>
+                                )}
+                            />
 
-                    <FormField
-                        control={form.control}
-                        name="salesEnd"
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel>Event sales end</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        type="date"
-                                        {...field}
-                                        onChange={(e) => {
-                                            field.onChange(
-                                                e.target.value ? new Date(e.target.value) : null
-                                            );
-                                        }}
-                                        value={
-                                            field.value
-                                                ? new Date(field.value).toISOString().split("T")[0]
-                                                : ""
-                                        }
-                                    />
-                                </FormControl>
-                                <FormMessage/>
-                            </FormItem>
-                        )}
-                    />
+                            <FormField
+                                control={form.control}
+                                name="salesEnd"
+                                render={({field}) => (
+                                    <FormItem>
+                                        <FormLabel>Event sales end</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                type="date"
+                                                {...field}
+                                                onChange={(e) => {
+                                                    field.onChange(
+                                                        e.target.value ? new Date(e.target.value) : null
+                                                    );
+                                                }}
+                                                value={
+                                                    field.value
+                                                        ? new Date(field.value).toISOString().split("T")[0]
+                                                        : ""
+                                                }
+                                            />
+                                        </FormControl>
+                                        <FormMessage/>
+                                    </FormItem>
+                                )}
+                            />
 
-                    <Button
-                        className="w-full"
-                        type="submit"
-                        onSubmit={onSubmit}
-                        disabled={isPending}
-                    >
-                        {isPending ? (
-                            <>
-                                <Loader2 className="animate-spin" width={20} height={20}/>
-                                {mode === "create" ? "Creating Event..." : "Updating Event..."}
-                            </>
-                        ) : mode === "create" ? (
-                            "Create Event"
-                        ) : (
-                            "Update Event"
-                        )}
-                    </Button>
-                </div>
+                            <Button
+                                className="w-full"
+                                type="submit"
+                                onSubmit={onSubmit}
+                                disabled={isPending}
+                            >
+                                {isPending ? (
+                                    <>
+                                        <Loader2 className="animate-spin" width={20} height={20}/>
+                                        {mode === "create" ? "Creating Event..." : "Updating Event..."}
+                                    </>
+                                ) : mode === "create" ? (
+                                    "Create Event"
+                                ) : (
+                                    "Update Event"
+                                )}
+                            </Button>
+                        </div>
+                    </CardContent>
+                </Card>
             </form>
         </Form>
     );

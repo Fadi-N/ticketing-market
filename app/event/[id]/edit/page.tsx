@@ -15,7 +15,9 @@ const EditEventPage = () => {
         return null;
     }
     return (
-        <EventForm mode="update" initialData={event} />
+        <div className="p-8">
+            <EventForm mode="update" initialData={event} />
+        </div>
     );
 };
 

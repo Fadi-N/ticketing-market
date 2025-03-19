@@ -3,7 +3,9 @@ import EventForm from "@/components/EventForm";
 
 const NewEventPage = () => {
     return (
-        <EventForm mode="create"/>
+        <div className="p-8">
+            <EventForm mode="create"/>
+        </div>
     );
 };
 
