@@ -72,22 +72,27 @@ const PurchaseTicket = ({eventId}: PurchaeTicketProps) => {
     }
 
     return (
-        <div>
-            <p>Ticket reserved</p>
-            <p>Expires in {timeRemaining}</p>
+        <div className="flex flex-col space-y-4 p-4 border rounded-lg mt-4 bg-yellow-500 text-white">
+            <div className="flex flex-col space-y-2">
+                <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Ticket reserved!</div>
+                <div className="text-base lg:text-lg xl:text-xl">Expires in {timeRemaining}</div>
+            </div>
             <p>
                 A ticket has been reserved for you. Complete your purchase before the timer expires to secure your spot
                 at this event.
             </p>
-            <Button
-                onClick={handlePurchase}
-                disabled={isExpired || isLoading}
-            >
-                {isLoading
-                    ? "Redirecting to checkout..."
-                    : "Purchase Your Ticket Now →"}
-            </Button>
-            <ReleaseTicket eventId={eventId} waitingListId={queuePosition._id}/>
+            <div className="flex flex-col lg:flex-row space-x-0 lg:space-x-2 space-y-2 lg:space-y-0">
+                <Button
+                    className="w-full"
+                    onClick={handlePurchase}
+                    disabled={isExpired || isLoading}
+                >
+                    {isLoading
+                        ? "Redirecting to checkout..."
+                        : "Purchase Your Ticket Now"}
+                </Button>
+                <ReleaseTicket eventId={eventId} waitingListId={queuePosition._id}/>
+            </div>
         </div>
     );
 };
