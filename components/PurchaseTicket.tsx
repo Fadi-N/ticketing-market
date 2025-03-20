@@ -8,6 +8,7 @@ import {api} from "@/convex/_generated/api";
 import {Id} from "@/convex/_generated/dataModel";
 import {Button} from "@/components/ui/button";
 import ReleaseTicket from "@/components/ReleaseTicket";
+import {createStripeCheckoutSession} from "@/app/actions/CreateStripeCheckoutSession";
 
 interface PurchaeTicketProps {
     eventId: Id<"events">
@@ -53,8 +54,21 @@ const PurchaseTicket = ({eventId}: PurchaeTicketProps) => {
         return () => clearInterval(interval);
     }, [offerExpiredAt, isExpired]);
 
-    const handlePurchase = () =>{
+    const handlePurchase = async() => {
+        if (!user) return;
 
+        try {
+            setIsLoading(true);
+            const {sessionUrl} = await createStripeCheckoutSession({eventId});
+
+            if (sessionUrl) {
+                router.push(sessionUrl);
+            }
+        }catch (error) {
+            console.error("Error creating checkout session:", error);
+        }finally {
+            setIsLoading(false);
+        }
     }
 
     return (
