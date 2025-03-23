@@ -96,7 +96,7 @@ const EventCard = ({eventId}: EventCardProps) => {
                 </div>
                 <div className="flex flex-col space-y-2">
                     <div className="flex items-center space-x-2">
-                        <CalendarDays className="text-green-600" width={20} height={20}/>
+                        <div>🗓</div>
                         <p>
                             {new Date(event.eventDate).toLocaleDateString()}
                             {" "}
@@ -104,11 +104,11 @@ const EventCard = ({eventId}: EventCardProps) => {
                         </p>
                     </div>
                     <div className="flex items-center space-x-2">
-                        <MapPin className="text-red-600" width={20} height={20}/>
+                        <div>📍</div>
                         <p>{event.location}</p>
                     </div>
                     <div className="flex items-center space-x-2">
-                        <Ticket className="text-blue-600" width={20} height={20}/>
+                        <div>🎟️</div>
                         <p>
                             {availability.totalTickets - availability.purchasedCount} /{""} {availability.totalTickets} available
                         </p>

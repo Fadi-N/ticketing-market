@@ -34,12 +34,12 @@ const RefreshPage = () => {
 
     return (
         <div className="p-8">
-            <Card className={error ? "bg-red-500 text-white" : "bg-green-500 text-white"}>
+            <Card className={!error ? "bg-red-100 text-red-500" : "bg-green-100 text-green-500"}>
                 <CardContent className="pt-4">
-                    {error ? (
+                    {!error ? (
                         <div className="flex flex-col items-center justify-center space-y-2">
                             <div className="flex items-center min-h-[200px]">
-                                <TriangleAlert width={50} height={50} />
+                                <TriangleAlert width={60} height={60} />
                             </div>
                             <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Something went wrong</div>
                             <div className="text-base lg:text-lg xl:text-xl">
@@ -49,7 +49,7 @@ const RefreshPage = () => {
                         </div>
                     ) : (
                         <div className="flex flex-col items-center justify-center">
-                            <Spinner/>
+                            <Spinner variant={!error ? "error" : "success"} />
                             <div className="flex flex-col space-y-2 items-center">
                                 <div className="text-xl lg:text-2xl xl:text-3xl font-medium">{accountLinkCreatePending ? "Creating your account link..." : "Redirecting to stripe..."}</div>
                                 {connctedAccountId && (

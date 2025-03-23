@@ -114,9 +114,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
-    @apply !font-['Poppins'] text-base leading-relaxed;
-
+    @apply bg-gradient-to-b from-[#7a9496] to-[#afa59d] text-white font-['Poppins'];
   }
 
   p{

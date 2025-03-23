@@ -20,7 +20,7 @@ const Navbar = () => {
                     <SignedIn>
                         <Link href="/tickets" className="border-e">
                             <Button
-                                className="text-base lg:text-lg xl:text-xl"
+                                className="text-white lg:text-lg xl:text-xl"
                                 variant="link"
                             >
                                 My tickets

@@ -7,12 +7,6 @@ import Navbar from "@/components/Navbar";
 import SyncUserWithConvex from "@/components/SyncUserWithConvex";
 import {Toaster} from "@/components/ui/sonner";
 
-const poppins = Poppins({
-    weight: ['400', '600'],
-    subsets: ['latin'],
-    display: 'swap',
-});
-
 const bebasNeue = Bebas_Neue({
     weight: '400',
     subsets: ['latin'],
@@ -31,7 +25,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-        <body className={`${poppins.className} ${bebasNeue.className} antialiased`}>
+        <body className={`${bebasNeue.className} antialiased`}>
         <ConvexClientProvider>
             <ClerkProvider>
                 <Navbar/>

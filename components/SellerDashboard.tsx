@@ -100,19 +100,23 @@ const SellerDashboard = () => {
                 <Card>
                     <CardContent className="pt-4">
                         <div className="flex flex-col space-y-4">
-                            <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Get those event tickets sold, no sweat!</div>
-                            <div className="text-base lg:text-lg xl:text-xl text-gray-400">List ‘em up for sale and keep everything under control with a few easy clicks—your
-                                events, your rules!</div>
+                            <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Get those event tickets sold,
+                                no sweat!
+                            </div>
+                            <div className="text-base lg:text-lg xl:text-xl text-gray-400">List ‘em up for sale and keep
+                                everything under control with a few easy clicks—your
+                                events, your rules!
+                            </div>
                             <div className="flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4">
                                 <Button className="w-full"
                                         onClick={() => router.push(`/seller/new-event`)}>
                                     <CalendarPlus width={20} height={20}/>
-                                    Craft My Next Big Event
+                                    Create new event
                                 </Button>
                                 <Button className="w-full"
                                         onClick={() => router.push(`/seller/events`)}>
                                     <CalendarDays width={20} height={20}/>
-                                    Check Out My Epic Events
+                                    My Events
                                 </Button>
                             </div>
                         </div>
@@ -124,8 +128,10 @@ const SellerDashboard = () => {
                     <CardContent className="pt-4">
                         <div className="flex flex-col space-y-4">
                             <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Begin Earning!</div>
-                            <div className="text-base lg:text-lg xl:text-xl text-gray-400">Create your seller account and start collecting secure payments via Stripe with
-                                ease.</div>
+                            <div className="text-base lg:text-lg xl:text-xl text-gray-400">Create your seller account
+                                and start collecting secure payments via Stripe with
+                                ease.
+                            </div>
                             <div>
                                 <Button className="w-full"
                                         onClick={handleCreateSellerAccount}>
@@ -145,15 +151,22 @@ const SellerDashboard = () => {
                             <CardContent className="flex lg:flex-col justify-between h-full">
                                 <div className="flex flex-col pt-4 space-y-10">
                                     <div className="flex flex-col space-y-4">
-                                        <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Account status</div>
+                                        <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Account status
+                                        </div>
                                         <div className="flex items-center space-x-2">
-                                            <div
-                                                className={`w-3 h-3 rounded-full ${accountStatus.isActive ? "bg-green-500" : "bg-yellow-500"}`}/>
+                                            <span className="relative flex size-2">
+                                                <span
+                                                    className={`absolute inline-flex size-full animate-ping rounded-full ${accountStatus.isActive ? "bg-green-600" : "bg-yellow-600"}`}></span><
+                                                span
+                                                className={`relative inline-flex size-2 rounded-full ${accountStatus.isActive ? "bg-green-500" : "bg-yellow-500"}`}></span>
+                                            </span>
                                             <p>{accountStatus.isActive ? "Active" : "Pending"}</p>
                                         </div>
                                     </div>
                                     <div className="flex flex-col space-y-4">
-                                        <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Payment capability</div>
+                                        <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Payment
+                                            capability
+                                        </div>
                                         <div>
                                             <div className="flex items-center space-x-1">
                                                 {accountStatus.chargesEnabled
@@ -204,13 +217,17 @@ const SellerDashboard = () => {
                         <Card className="flex-1">
                             <CardContent className="flex flex-col justify-between h-full pt-4">
                                 <div className="flex flex-col space-y-4">
-                                    <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Required Information</div>
+                                    <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Required Information
+                                    </div>
                                     <div className="flex flex-col space-y-6">
                                         <div>
                                             <div className="grid grid-cols-1 gap-4">
                                                 {accountStatus.requirements.currently_due.length > 0 && (
                                                     <>
-                                                        <div className="text-base lg:text-lg xl:text-xl text-gray-400">Action Required</div>
+                                                        <div
+                                                            className="text-base lg:text-lg xl:text-xl text-gray-400">Action
+                                                            Required
+                                                        </div>
                                                         <ul>
                                                             {accountStatus.requirements.currently_due.map((req) => (
                                                                 <div key={req} className="flex items-center space-x-2">
@@ -229,7 +246,10 @@ const SellerDashboard = () => {
                                             <div className="grid grid-cols-1 gap-4">
                                                 {accountStatus.requirements.eventually_due.length > 0 && (
                                                     <>
-                                                        <div className="text-base lg:text-lg xl:text-xl text-gray-400">Eventually Needed</div>
+                                                        <div
+                                                            className="text-base lg:text-lg xl:text-xl text-gray-400">Eventually
+                                                            Needed
+                                                        </div>
                                                         <ul>
                                                             {accountStatus.requirements.eventually_due.map(
                                                                 (req) => (

@@ -72,7 +72,7 @@ const PurchaseTicket = ({eventId}: PurchaeTicketProps) => {
     }
 
     return (
-        <div className="flex flex-col space-y-4 p-4 border rounded-lg mt-4 bg-yellow-500 text-white">
+        <div className="flex flex-col space-y-4 p-4 border rounded-lg mt-4 bg-orange-100 text-orange-500">
             <div className="flex flex-col space-y-2">
                 <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Ticket reserved!</div>
                 <div className="text-base lg:text-lg xl:text-xl">Expires in {timeRemaining}</div>
