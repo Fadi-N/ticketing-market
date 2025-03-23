@@ -278,7 +278,7 @@ export const purchaseTicket = mutation({
             });
 
             console.log("Processing queue for next person");
-            await processQueue(ctx, { eventId });
+            await processQueue(ctx, {eventId});
 
             console.log("Purchase ticket completed successfully");
         } catch (error) {
@@ -286,5 +286,27 @@ export const purchaseTicket = mutation({
             throw new Error(`Failed to complete ticket purchase: ${error}`);
         }
 
+    }
+})
+
+export const getUserTickets = query({
+    args: {userId: v.string()},
+    handler: async (ctx, {userId}) => {
+        const tickets = await ctx.db
+            .query("tickets")
+            .withIndex("by_user", (query) => query.eq("userId", userId))
+            .collect()
+
+        const ticketsWithEvents = await Promise.all(
+            tickets.map(async (ticket) => {
+                const event = await ctx.db.get(ticket.eventId);
+                return {
+                    ...ticket,
+                    event
+                }
+            })
+        )
+
+        return ticketsWithEvents
     }
 })

@@ -86,7 +86,7 @@ const EventCard = ({eventId}: EventCardProps) => {
             onClick={handleCardClick}
         >
             <CardContent className="flex flex-col h-full justify-between pt-4">
-                <div className="flex flex-col space-y-4 mb-12">
+                <div className="flex flex-col space-y-2 mb-12">
                     <div className="text-xl lg:text-2xl xl:text-3xl font-medium">{event.name}</div>
                     <div>
                         <Badge className="rounded-full bg-orange-500">{event.category}</Badge>
