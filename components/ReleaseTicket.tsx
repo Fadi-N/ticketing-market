@@ -34,7 +34,7 @@ const ReleaseTicket = ({eventId, waitingListId}: PurchaseTicketProps) => {
 
     return (
         <Button
-            className="w-full"
+            className="w-full rounded-full bg-orange-500"
             onClick={handleRelease}
             disabled={isReleasing}
         >

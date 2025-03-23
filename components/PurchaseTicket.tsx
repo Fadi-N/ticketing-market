@@ -83,7 +83,7 @@ const PurchaseTicket = ({eventId}: PurchaeTicketProps) => {
             </p>
             <div className="flex flex-col lg:flex-row space-x-0 lg:space-x-2 space-y-2 lg:space-y-0">
                 <Button
-                    className="w-full"
+                    className="w-full rounded-full bg-orange-500"
                     onClick={handlePurchase}
                     disabled={isExpired || isLoading}
                 >

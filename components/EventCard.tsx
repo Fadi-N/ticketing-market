@@ -53,26 +53,6 @@ const EventCard = ({eventId}: EventCardProps) => {
     const renderTicketStatus = () => {
         if (!user) return null;
 
-        if (userTicket) {
-            return (
-                <div
-                    className="flex flex-col lg:flex-row justify-between space-y-4 lg:space-y-0 p-4 border rounded-lg mt-4 bg-green-100 text-green-500">
-                    <div className="flex items-center justify-center space-x-2">
-                        <CircleCheck className="w-8 h-8"/>
-                        <div className="text-xl lg:text-2xl xl:text-3xl font-medium">You have a ticket!</div>
-                    </div>
-
-                    <Button
-                        className="w-full lg:w-auto rounded-full bg-green-500"
-                        onClick={() => router.push(`/tickets/${userTicket._id}`)}
-                    >
-                        View your ticket
-                    </Button>
-
-                </div>
-            )
-        }
-
         if (queuePosition) {
             return (
                 <>
@@ -132,6 +112,23 @@ const EventCard = ({eventId}: EventCardProps) => {
                             {availability.totalTickets - availability.purchasedCount} /{""} {availability.totalTickets} available
                         </p>
                     </div>
+                    {userTicket && (
+                        <div
+                            className="flex flex-col lg:flex-row justify-between space-y-4 lg:space-y-0 p-4 border rounded-lg bg-green-100 text-green-500">
+                            <div className="flex items-center justify-center space-x-2">
+                                <CircleCheck className="w-8 h-8"/>
+                                <div className="text-xl lg:text-2xl xl:text-3xl font-medium">You have a ticket!</div>
+                            </div>
+
+                            <Button
+                                className="w-full lg:w-auto rounded-full bg-green-500"
+                                onClick={() => router.push(`/tickets/${userTicket._id}`)}
+                            >
+                                View your ticket
+                            </Button>
+
+                        </div>
+                    )}
                 </div>
 
                 {!isPastEvent && renderTicketStatus()}
