@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-        <body className={`${bebasNeue.className} antialiased`}>
+        <body className={`${bebasNeue.className} antialiased min-h-[100vh]`}>
         <ConvexClientProvider>
             <ClerkProvider>
                 <Navbar/>
