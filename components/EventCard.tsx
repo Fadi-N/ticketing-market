@@ -1,16 +1,16 @@
 "use client"
 
 import React from 'react';
-import {Card, CardDescription, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {Card, CardContent} from "@/components/ui/card";
 import {Id} from "@/convex/_generated/dataModel";
 import {useUser} from "@clerk/nextjs";
 import {useQuery} from "convex/react";
 import {api} from "@/convex/_generated/api";
-import {useRouter} from "next/navigation";
+import {useParams, usePathname, useRouter} from "next/navigation";
 import {Button} from "@/components/ui/button";
-import {CalendarDays, MapPin, Ticket, TicketCheck} from "lucide-react";
 import PurchaseTicket from "@/components/PurchaseTicket";
 import {Badge} from "@/components/ui/badge";
+import {CircleCheck} from "lucide-react";
 
 
 interface EventCardProps {
@@ -19,6 +19,7 @@ interface EventCardProps {
 
 const EventCard = ({eventId}: EventCardProps) => {
     const {user} = useUser();
+    const pathname = usePathname();
     const router = useRouter();
     const event = useQuery(api.events.getById, {eventId});
     const availability = useQuery(api.events.getEventAvailability, {eventId});
@@ -54,11 +55,21 @@ const EventCard = ({eventId}: EventCardProps) => {
 
         if (userTicket) {
             return (
-                <Button className="w-full" variant="secondary"
-                        onClick={() => router.push(`/tickets/${userTicket._id}`)}>
-                    <TicketCheck width={20} height={20}/>
-                    Peek at Your Golden Ticket!
-                </Button>
+                <div
+                    className="flex flex-col lg:flex-row justify-between space-y-4 lg:space-y-0 p-4 border rounded-lg mt-4 bg-green-100 text-green-500">
+                    <div className="flex items-center justify-center space-x-2">
+                        <CircleCheck className="w-8 h-8"/>
+                        <div className="text-xl lg:text-2xl xl:text-3xl font-medium">You have a ticket!</div>
+                    </div>
+
+                    <Button
+                        className="w-full lg:w-auto rounded-full bg-green-500"
+                        onClick={() => router.push(`/tickets/${userTicket._id}`)}
+                    >
+                        View your ticket
+                    </Button>
+
+                </div>
             )
         }
 
@@ -81,10 +92,18 @@ const EventCard = ({eventId}: EventCardProps) => {
         return null;
     }
 
+    const handleCardClick = () => {
+        if (pathname.includes("/event/")) {
+            return;
+        }
+
+        router.push(`/event/${event._id}`)
+    }
+
     return (
         <Card
-            className="flex flex-col justify-between hover:cursor-pointer transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
-            onClick={() => router.push(`/event/${event._id}`)}
+            className={`flex flex-col justify-between transition duration-300 ease-in-out transform ${!pathname.includes("/event/") ? "hover:cursor-pointer hover:-translate-y-1 hover:shadow-lg" : ""}`}
+            onClick={handleCardClick}
         >
             <CardContent className="flex flex-col h-full justify-between pt-4">
                 <div className="flex flex-col space-y-4 mb-12">
