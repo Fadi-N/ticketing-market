@@ -57,29 +57,25 @@ const EventPage = () => {
                         </div>
                     </CardContent>
                 </Card>
-                <Card className="flex-1">
-                    <CardContent className="flex flex-col lg:flex-row space-x-2 pt-4">
-                        {user ? (
-                            <>
-                                <JoinQueue
-                                    eventId={event._id}
-                                    userId={user.id}
-                                />
-                                <Button className="w-full"
-                                        onClick={() => router.push(`/event/${event._id}/edit`)}>
-                                    <CalendarPlus width={20} height={20}/>
-                                    Edit Event
-                                </Button>
-                            </>
-
-                        ) : (
-                            <SignInButton>
-                                <Button>Sign In or Tickets Stay Single!</Button>
-                            </SignInButton>
-                        )}
-                    </CardContent>
-                </Card>
             </div>
+            {user ? (
+                <div className="flex flex-col lg:flex-row space-x-2">
+                    <JoinQueue
+                        eventId={event._id}
+                        userId={user.id}
+                    />
+                    <Button className="w-full rounded-full"
+                            onClick={() => router.push(`/event/${event._id}/edit`)}>
+                        <CalendarPlus width={20} height={20}/>
+                        Edit Event
+                    </Button>
+                </div>
+
+            ) : (
+                <SignInButton>
+                    <Button className="w-full rounded-full">Buy ticket</Button>
+                </SignInButton>
+            )}
         </div>
     );
 };

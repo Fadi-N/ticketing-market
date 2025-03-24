@@ -108,12 +108,12 @@ const SellerDashboard = () => {
                                 events, your rules!
                             </div>
                             <div className="flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4">
-                                <Button className="w-full"
+                                <Button className="w-full rounded-full"
                                         onClick={() => router.push(`/seller/new-event`)}>
                                     <CalendarPlus width={20} height={20}/>
                                     Create new event
                                 </Button>
-                                <Button className="w-full"
+                                <Button className="w-full rounded-full"
                                         onClick={() => router.push(`/seller/events`)}>
                                     <CalendarDays width={20} height={20}/>
                                     My Events
@@ -133,7 +133,7 @@ const SellerDashboard = () => {
                                 ease.
                             </div>
                             <div>
-                                <Button className="w-full"
+                                <Button className="w-full rounded-full"
                                         onClick={handleCreateSellerAccount}>
                                     <Gem width={20} height={20}/>
                                     Make That Seller Account Happen
@@ -189,14 +189,14 @@ const SellerDashboard = () => {
                                     {accountStatus.isActive && (
                                         <div className="flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4">
                                             <Button
-                                                className="w-full"
+                                                className="w-full rounded-full"
                                                 onClick={handleManageAccount}
                                             >
                                                 <CircleGauge width={20} height={20}/>
                                                 Seller Dashboard
                                             </Button>
                                             <Button
-                                                className="w-full"
+                                                className="w-full rounded-full"
                                                 onClick={fetchAccountStatus}
                                             >
                                                 <RefreshCw width={20} height={20}/>
@@ -271,7 +271,7 @@ const SellerDashboard = () => {
                                     </div>
                                 </div>
                                 <Button
-                                    className="w-full"
+                                    className="w-full rounded-full"
                                     onClick={handleCompleteRequirements}
                                 >
                                     <ListTodo width={20} height={20}/>

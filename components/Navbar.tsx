@@ -18,19 +18,29 @@ const Navbar = () => {
                 </div>
                 <div className="flex items-center space-x-4">
                     <SignedIn>
-                        <Link href="/tickets" className="border-e">
-                            <Button
-                                className="text-white lg:text-lg xl:text-xl"
-                                variant="link"
-                            >
-                                My tickets
-                            </Button>
-                        </Link>
+                        <div>
+                            <Link href="/seller" className="border-e">
+                                <Button
+                                    className="text-white lg:text-lg xl:text-xl"
+                                    variant="link"
+                                >
+                                    Dashboard
+                                </Button>
+                            </Link>
+                            <Link href="/tickets" className="border-e">
+                                <Button
+                                    className="text-white lg:text-lg xl:text-xl"
+                                    variant="link"
+                                >
+                                    My tickets
+                                </Button>
+                            </Link>
+                        </div>
                         <UserButton/>
                     </SignedIn>
                     <SignedOut>
                         <SignInButton mode="modal">
-                            <Button>Sign In</Button>
+                            <Button variant="link">Sign In</Button>
                         </SignInButton>
                     </SignedOut>
                 </div>

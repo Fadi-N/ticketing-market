@@ -3,14 +3,15 @@
 import React from 'react';
 import {Card, CardContent} from "@/components/ui/card";
 import {Id} from "@/convex/_generated/dataModel";
-import {useUser} from "@clerk/nextjs";
+import {SignInButton, useUser} from "@clerk/nextjs";
 import {useQuery} from "convex/react";
 import {api} from "@/convex/_generated/api";
 import {useParams, usePathname, useRouter} from "next/navigation";
 import {Button} from "@/components/ui/button";
 import PurchaseTicket from "@/components/PurchaseTicket";
 import {Badge} from "@/components/ui/badge";
-import {CircleCheck} from "lucide-react";
+import {CalendarPlus, CircleCheck} from "lucide-react";
+import JoinQueue from "@/components/JoinQueue";
 
 
 interface EventCardProps {
@@ -112,6 +113,7 @@ const EventCard = ({eventId}: EventCardProps) => {
                             {availability.totalTickets - availability.purchasedCount} /{""} {availability.totalTickets} available
                         </p>
                     </div>
+
                     {userTicket && (
                         <div
                             className="flex flex-col lg:flex-row justify-between space-y-4 lg:space-y-0 p-4 border rounded-lg bg-green-100 text-green-500">

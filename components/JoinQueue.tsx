@@ -88,7 +88,7 @@ const JoinQueue = ({eventId, userId}: JoinQueueProps) => {
                         </div>
                     ) : (
                         <Button
-                            className="w-full"
+                            className="w-full rounded-full"
                             onClick={handleJoinQueue}
                             disabled={isPastEvent}
                         >

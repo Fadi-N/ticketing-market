@@ -43,7 +43,7 @@ const TicketPage = () => {
                     onClick={() => router.push("/tickets")}
                 >
                     <ArrowLeft width={20} height={20} />
-                    back to my tickets
+                    Back to my tickets
                 </Button>
 
                 <div className="flex space-x-2">

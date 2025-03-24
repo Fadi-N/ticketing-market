@@ -299,7 +299,7 @@ const EventForm = ({mode, initialData}: EventFormProps) => {
                             />
                         </div>
                         <Button
-                            className="w-full"
+                            className="w-full rounded-full"
                             type="submit"
                             onSubmit={onSubmit}
                             disabled={isPending}
