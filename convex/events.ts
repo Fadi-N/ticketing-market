@@ -310,3 +310,49 @@ export const getUserTickets = query({
         return ticketsWithEvents
     }
 })
+
+export type Metrics = {
+    soldTickets: number;
+    refundedTickets: number;
+    cancelledTickets: number;
+    revenue: number;
+};
+
+export const getSellerEvents = query({
+    args: {userId: v.string()},
+    handler: async (ctx, {userId}) => {
+        const events = await ctx.db
+            .query("events")
+            .filter((query) => query.eq(query.field("userId"), userId))
+            .collect()
+
+        const eventsWithMetrics = await Promise.all(
+            events.map(async (event) => {
+                const tickets = await ctx.db
+                    .query("tickets")
+                    .withIndex("by_event", (query) => query.eq("eventId", event._id))
+                    .collect()
+
+                const validTickets = tickets.filter((ticket) => ticket.status === "valid" || ticket.status === "used")
+                const refundedTickets = tickets.filter((ticket) => ticket.status === "refunded");
+                const cancelledTickets = tickets.filter(
+                    (ticket) => ticket.status === "concelled"
+                );
+
+                const metrics: Metrics = {
+                    soldTickets: validTickets.length,
+                    refundedTickets: refundedTickets.length,
+                    cancelledTickets: cancelledTickets.length,
+                    revenue: validTickets.length * event.price,
+                };
+
+                return {
+                    ...event,
+                    metrics,
+                };
+            })
+        )
+
+        return eventsWithMetrics;
+    }
+})
