@@ -40,7 +40,7 @@ const EventPage = () => {
                     <CardContent className="flex items-center space-x-4 pt-4">
                         <div className="flex flex-col space-y-4">
                             <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Event information</div>
-                            <div>
+                            <div className="text-gray-400">
                                 <div className="flex items-center space-x-2">
                                     <Info width={20} height={20}/>
                                     <p>Please arrive 30 min before the event starts.</p>

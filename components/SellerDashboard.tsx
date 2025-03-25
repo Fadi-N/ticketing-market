@@ -126,7 +126,7 @@ const SellerDashboard = () => {
             {!stripeConnectId && !accountCreatePending && (
                 <Card>
                     <CardContent className="pt-4">
-                        <div className="flex flex-col space-y-4">
+                        <div className="flex flex-col space-y-2">
                             <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Begin Earning!</div>
                             <div className="text-base lg:text-lg xl:text-xl text-gray-400">Create your seller account
                                 and start collecting secure payments via Stripe with
@@ -150,20 +150,23 @@ const SellerDashboard = () => {
                         <Card className="flex-1 min-h-96">
                             <CardContent className="flex lg:flex-col justify-between h-full">
                                 <div className="flex flex-col pt-4 space-y-10">
-                                    <div className="flex flex-col space-y-4">
-                                        <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Account status
+                                    <div className="flex flex-col space-y-2">
+                                        <div className="text-xl lg:text-2xl xl:text-3xl font-medium">
+                                            Account status
                                         </div>
-                                        <div className="flex items-center space-x-2">
+                                        <div className="flex">
+                                            <div className={`flex items-center space-x-2 rounded-full px-4 py-0.5 ${accountStatus?.isActive ? "bg-green-100" : "bg-orange-100"}`}>
                                             <span className="relative flex size-2">
                                                 <span
                                                     className={`absolute inline-flex size-full animate-ping rounded-full ${accountStatus.isActive ? "bg-green-600" : "bg-yellow-600"}`}></span><
                                                 span
                                                 className={`relative inline-flex size-2 rounded-full ${accountStatus.isActive ? "bg-green-500" : "bg-yellow-500"}`}></span>
                                             </span>
-                                            <p>{accountStatus.isActive ? "Active" : "Pending"}</p>
+                                                <p className={accountStatus.isActive ? "text-green-500 text-sm" : "text-orange-500 text-sm"}>{accountStatus.isActive ? "Active" : "Pending"}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="flex flex-col space-y-4">
+                                    <div className="flex flex-col space-y-2">
                                         <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Payment
                                             capability
                                         </div>
@@ -216,7 +219,7 @@ const SellerDashboard = () => {
                         </Card>
                         <Card className="flex-1">
                             <CardContent className="flex flex-col justify-between h-full pt-4">
-                                <div className="flex flex-col space-y-4">
+                                <div className="flex flex-col space-y-2">
                                     <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Required Information
                                     </div>
                                     <div className="flex flex-col space-y-6">

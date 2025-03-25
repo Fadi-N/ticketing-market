@@ -14,7 +14,7 @@ const SearchBar = () => {
                 />
                 <Input
                     placeholder="Search"
-                    className="rounded-full pl-10"
+                    className="rounded-full pl-10 !placeholder-white"
                     name="query"
                 />
             </div>

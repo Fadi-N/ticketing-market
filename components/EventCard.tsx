@@ -3,15 +3,14 @@
 import React from 'react';
 import {Card, CardContent} from "@/components/ui/card";
 import {Id} from "@/convex/_generated/dataModel";
-import {SignInButton, useUser} from "@clerk/nextjs";
+import {useUser} from "@clerk/nextjs";
 import {useQuery} from "convex/react";
 import {api} from "@/convex/_generated/api";
-import {useParams, usePathname, useRouter} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import {Button} from "@/components/ui/button";
 import PurchaseTicket from "@/components/PurchaseTicket";
 import {Badge} from "@/components/ui/badge";
-import {CalendarPlus, CircleCheck} from "lucide-react";
-import JoinQueue from "@/components/JoinQueue";
+import {CircleCheck} from "lucide-react";
 
 
 interface EventCardProps {
@@ -90,7 +89,7 @@ const EventCard = ({eventId}: EventCardProps) => {
                 <div className="flex flex-col space-y-2 mb-12">
                     <div className="text-xl lg:text-2xl xl:text-3xl font-medium">{event.name}</div>
                     <div>
-                        <Badge className="rounded-full bg-orange-500">{event.category}</Badge>
+                        <Badge className="rounded-full bg-orange-500 font-medium">{event.category}</Badge>
                     </div>
                     <div className="text-base lg:text-lg xl:text-xl text-gray-400">{event.description}</div>
                 </div>
