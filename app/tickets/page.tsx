@@ -5,9 +5,9 @@ import {useUser} from "@clerk/nextjs";
 import {useQuery} from "convex/react";
 import {api} from "@/convex/_generated/api";
 import {Badge} from "@/components/ui/badge";
-import {Card, CardContent} from "@/components/ui/card";
 import {Info} from "lucide-react";
 import TicketCard from "@/components/TicketCard";
+import AnnouncementCard from "@/components/AnnouncementCard";
 
 const MyTicketsPage = () => {
     const {user} = useUser();
@@ -25,11 +25,11 @@ const MyTicketsPage = () => {
         <div className="p-8 flex flex-col space-y-4">
             <div className="flex justify-between items-center">
                 <div className="text-3xl lg:text-4xl xl:text-5xl font-semibold">My tickets</div>
-                <Badge className="rounded-full bg-orange-500">{tickets.length} total tickets</Badge>
+                <Badge className="rounded-full text-md bg-orange-500 font-medium">{tickets.length} total tickets</Badge>
             </div>
 
             {upcomingTickets.length > 0 && (
-                <div>
+                <div className="flex flex-col space-y-4">
                     <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Upcoming events</div>
                     <div>
                         {upcomingTickets.map((ticket) => (
@@ -62,21 +62,11 @@ const MyTicketsPage = () => {
             )}
 
             {tickets.length === 0 && (
-                <Card>
-                    <CardContent className="pt-4">
-
-                        <div className="flex flex-col items-center justify-center space-y-2">
-                            <div className="flex items-center min-h-[200px]">
-                                <Info width={60} height={60}/>
-                            </div>
-                            <div className="text-xl lg:text-2xl xl:text-3xl font-medium">No ticket yet</div>
-                            <div className="text-base lg:text-lg xl:text-xl">
-                                All you tickets will be listed here.
-                            </div>
-                        </div>
-
-                    </CardContent>
-                </Card>
+                <AnnouncementCard
+                    icon={<Info width={60} height={60}/>}
+                    title="No ticket yet"
+                    description="All you tickets will be listed here."
+                />
             )}
 
         </div>

@@ -32,7 +32,7 @@ const TicketCard = ({ticketId}: TicketCardProps) => {
                 <div className="flex flex-col space-y-2 mb-8 border-b pb-4">
                     <div className="text-xl lg:text-2xl xl:text-3xl font-medium">{ticket.event.name}</div>
                     <div>
-                        <Badge className="rounded-full bg-orange-500">{ticket.event.category}</Badge>
+                        <Badge className="rounded-full bg-orange-500 font-medium">{ticket.event.category}</Badge>
                     </div>
                 </div>
                 <div className="flex flex-col space-y-2 border-b pb-8">
@@ -67,8 +67,8 @@ const TicketCard = ({ticketId}: TicketCardProps) => {
                 </div>
                 <Badge
                     className={ticket.event.is_cancelled
-                        ? "rounded-full bg-red-100 text-red-500"
-                        : "rounded-full bg-green-100 text-green-500"}
+                        ? "rounded-full bg-red-100 text-red-500 font-medium text-base"
+                        : "rounded-full bg-green-100 text-green-500 font-medium text-base"}
                 >                    {ticket.event.is_cancelled ? "Cancelled" : "Valid Ticket"}
                 </Badge>
             </CardFooter>

@@ -155,7 +155,8 @@ const SellerDashboard = () => {
                                             Account status
                                         </div>
                                         <div className="flex">
-                                            <div className={`flex items-center space-x-2 rounded-full px-4 py-0.5 ${accountStatus?.isActive ? "bg-green-100" : "bg-orange-100"}`}>
+                                            <div
+                                                className={`flex items-center space-x-2 rounded-full px-4 py-0.5 ${accountStatus?.isActive ? "bg-green-100" : "bg-orange-100"}`}>
                                             <span className="relative flex size-2">
                                                 <span
                                                     className={`absolute inline-flex size-full animate-ping rounded-full ${accountStatus.isActive ? "bg-green-600" : "bg-yellow-600"}`}></span><
@@ -219,58 +220,54 @@ const SellerDashboard = () => {
                         </Card>
                         <Card className="flex-1">
                             <CardContent className="flex flex-col justify-between h-full pt-4">
-                                <div className="flex flex-col space-y-2">
+                                <div className="flex flex-col space-y-2 mb-4">
                                     <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Required Information
                                     </div>
-                                    <div className="flex flex-col space-y-6">
-                                        <div>
-                                            <div className="grid grid-cols-1 gap-4">
-                                                {accountStatus.requirements.currently_due.length > 0 && (
-                                                    <>
-                                                        <div
-                                                            className="text-base lg:text-lg xl:text-xl text-gray-400">Action
-                                                            Required
+                                    <div className="flex space-x-12">
+                                        {accountStatus.requirements.currently_due.length > 0 && (
+                                            <div className="flex flex-col space-y-2">
+                                                <div
+                                                    className="text-base lg:text-lg xl:text-xl text-gray-400">Action
+                                                    Required
+                                                </div>
+                                                <ul>
+                                                    {accountStatus.requirements.currently_due.map((req) => (
+                                                        <div key={req} className="flex items-center space-x-2">
+                                                            <TriangleAlert
+                                                                className="text-yellow-500"
+                                                                width={20}
+                                                                height={20}
+                                                            />
+                                                            <li>{req.replace(/_/g, " ")}</li>
                                                         </div>
-                                                        <ul>
-                                                            {accountStatus.requirements.currently_due.map((req) => (
-                                                                <div key={req} className="flex items-center space-x-2">
-                                                                    <TriangleAlert
-                                                                        className="text-yellow-500"
-                                                                        width={20}
-                                                                        height={20}
-                                                                    />
-                                                                    <li>{req.replace(/_/g, " ")}</li>
-                                                                </div>
-                                                            ))}
-                                                        </ul>
-                                                    </>
-                                                )}
+                                                    ))}
+                                                </ul>
                                             </div>
-                                            <div className="grid grid-cols-1 gap-4">
-                                                {accountStatus.requirements.eventually_due.length > 0 && (
-                                                    <>
-                                                        <div
-                                                            className="text-base lg:text-lg xl:text-xl text-gray-400">Eventually
-                                                            Needed
-                                                        </div>
-                                                        <ul>
-                                                            {accountStatus.requirements.eventually_due.map(
-                                                                (req) => (
-                                                                    <div key={req}
-                                                                         className="flex items-center space-x-2">
-                                                                        <TriangleAlert
-                                                                            className="text-yellow-500"
-                                                                            width={20} height={20}
-                                                                        />
-                                                                        <li key={req}>{req.replace(/_/g, " ")}</li>
-                                                                    </div>
-                                                                )
-                                                            )}
-                                                        </ul>
-                                                    </>
-                                                )}
+                                        )}
+
+                                        {accountStatus.requirements.eventually_due.length > 0 && (
+                                            <div className="flex flex-col space-y-2">
+                                                <div
+                                                    className="text-base lg:text-lg xl:text-xl text-gray-400">Eventually
+                                                    Needed
+                                                </div>
+                                                <ul>
+                                                    {accountStatus.requirements.eventually_due.map(
+                                                        (req) => (
+                                                            <div key={req}
+                                                                 className="flex items-center space-x-2">
+                                                                <TriangleAlert
+                                                                    className="text-yellow-500"
+                                                                    width={20} height={20}
+                                                                />
+                                                                <li key={req}>{req.replace(/_/g, " ")}</li>
+                                                            </div>
+                                                        )
+                                                    )}
+                                                </ul>
                                             </div>
-                                        </div>
+                                        )}
+
                                     </div>
                                 </div>
                                 <Button

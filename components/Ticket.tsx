@@ -110,8 +110,8 @@ const Ticket = ({ticketId}: TicketProps) => {
                 </div>
                 <Badge
                     className={ticket.event.is_cancelled
-                        ? "rounded-full bg-red-100 text-red-500"
-                        : "rounded-full bg-green-100 text-green-500"}
+                        ? "rounded-full bg-red-100 text-red-500 font-medium text-base"
+                        : "rounded-full bg-green-100 text-green-500 font-medium text-base"}
                 >                    {ticket.event.is_cancelled ? "Cancelled" : "Valid Ticket"}
                 </Badge>
             </CardFooter>
