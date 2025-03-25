@@ -13,7 +13,7 @@ const AnnouncementCard = ({icon, title, description, customClass}: AnnouncementC
         <Card className={customClass && customClass}>
             <CardContent className="pt-4">
                 <div className="flex flex-col items-center justify-center space-y-2">
-                    <div className="flex items-center min-h-[200px]">
+                    <div className={description ? "flex items-center min-h-[200px]" : "flex items-center min-h-[100px]"}>
                         {icon}
                     </div>
                     <div className="text-xl lg:text-2xl xl:text-3xl font-medium">{title}</div>
