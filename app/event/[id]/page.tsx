@@ -31,6 +31,8 @@ const EventPage = () => {
         );
     }
 
+    const isPastEvent = event.eventDate < Date.now();
+
     return (
 
         <div className="flex flex-col space-y-4 p-8">
@@ -57,25 +59,49 @@ const EventPage = () => {
                         </div>
                     </CardContent>
                 </Card>
+                {user ? (
+                    <Card className="flex-1">
+                        <CardContent className="flex items-center space-x-4 pt-4">
+                            <div className="flex flex-1 flex-col space-y-4">
+                                <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Ticket availability</div>
+                                <div className="flex items-center space-x-2">
+                                    <div>
+                                        💥
+                                    </div>
+                                    <div>
+                                        <p>Sales start</p>
+                                        <p className="text-sm text-gray-400">{new Date(event.salesStart).toLocaleDateString()}</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                    <div>💥</div>
+                                    <div>
+                                        <p>Sales end</p>
+                                        <p className="text-sm text-gray-400">{new Date(event.salesEnd).toLocaleDateString()}</p>
+                                    </div>
+                                </div>
+                                <div className="flex flex-col lg:flex-row space-x-2">
+                                    <JoinQueue
+                                        eventId={event._id}
+                                        userId={user.id}
+                                    />
+                                    {!isPastEvent && (
+                                        <Button className="w-full rounded-full"
+                                                onClick={() => router.push(`/event/${event._id}/edit`)}>
+                                            <CalendarPlus width={20} height={20}/>
+                                            Edit Event
+                                        </Button>
+                                    )}
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+                ) : (
+                    <SignInButton>
+                        <Button className="w-full rounded-full">Buy ticket</Button>
+                    </SignInButton>
+                )}
             </div>
-            {user ? (
-                <div className="flex flex-col lg:flex-row space-x-2">
-                    <JoinQueue
-                        eventId={event._id}
-                        userId={user.id}
-                    />
-                    <Button className="w-full rounded-full"
-                            onClick={() => router.push(`/event/${event._id}/edit`)}>
-                        <CalendarPlus width={20} height={20}/>
-                        Edit Event
-                    </Button>
-                </div>
-
-            ) : (
-                <SignInButton>
-                    <Button className="w-full rounded-full">Buy ticket</Button>
-                </SignInButton>
-            )}
         </div>
     );
 };

@@ -9,7 +9,8 @@ import {WAITING_LIST_STATUS} from "@/convex/constants";
 import {Button} from "@/components/ui/button";
 import {ConvexError} from "convex/values";
 import {toast} from "sonner";
-import {Coins} from "lucide-react";
+import {CalendarClock, Coins, Frown} from "lucide-react";
+import AnnouncementCard from "@/components/AnnouncementCard";
 
 interface JoinQueueProps {
     eventId: Id<"events">,
@@ -32,7 +33,7 @@ const JoinQueue = ({eventId, userId}: JoinQueueProps) => {
 
     const handleJoinQueue = async () => {
         try {
-            const result = await joinWaitingList({ eventId, userId });
+            const result = await joinWaitingList({eventId, userId});
             if (result.success) {
                 console.log("Successfully joined waiting list");
                 toast.success("Success!", {
@@ -59,7 +60,7 @@ const JoinQueue = ({eventId, userId}: JoinQueueProps) => {
         }
     };
     if (queuePosition === undefined || availability === undefined || !event) {
-        return <Spinner />;
+        return <Spinner/>;
     }
 
     if (userTicket) {
@@ -77,22 +78,24 @@ const JoinQueue = ({eventId, userId}: JoinQueueProps) => {
                     queuePosition.offerExpiredAt <= Date.now())) && (
                 <>
                     {isPastEvent ? (
-                        <div>
-                            <span>Event has ended</span>
-                        </div>
+                            <AnnouncementCard
+                                icon={<CalendarClock width={60} height={60}/>}
+                                title="Event has ended"
+                                customClass="bg-red-100 text-red-500 w-full"
+                            />
                     ) : availability.purchasedCount >= availability?.totalTickets ? (
-                        <div>
-                            <p>
-                                Sorry, this event is sold out
-                            </p>
-                        </div>
+                            <AnnouncementCard
+                                icon={<Frown width={60} height={60}/>}
+                                title="Event is sold out"
+                                customClass="bg-red-100 text-red-500 w-full"
+                            />
                     ) : (
                         <Button
                             className="w-full rounded-full"
                             onClick={handleJoinQueue}
                             disabled={isPastEvent}
                         >
-                            <Coins width={20} height={20} />
+                            <Coins width={20} height={20}/>
                             Buy Ticket
                         </Button>
                     )}
