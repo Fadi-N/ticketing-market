@@ -336,7 +336,7 @@ export const getSellerEvents = query({
                 const validTickets = tickets.filter((ticket) => ticket.status === "valid" || ticket.status === "used")
                 const refundedTickets = tickets.filter((ticket) => ticket.status === "refunded");
                 const cancelledTickets = tickets.filter(
-                    (ticket) => ticket.status === "concelled"
+                    (ticket) => ticket.status === "cancelled"
                 );
 
                 const metrics: Metrics = {
@@ -354,5 +354,39 @@ export const getSellerEvents = query({
         )
 
         return eventsWithMetrics;
+    }
+})
+
+export const cancelEvent = mutation({
+    args: {eventId: v.id("events")},
+    handler: async (ctx, {eventId}) => {
+        const event = await ctx.db.get(eventId);
+        if (!event) throw new Error("Event not found");
+
+        const tickets = await ctx.db
+            .query("tickets")
+            .withIndex("by_event", (query) => query.eq("eventId", eventId))
+            .filter((query) => query.or(query.eq(query.field("status"), "valid"), query.eq(query.field("status"), "used"))
+            )
+            .collect();
+
+        if (tickets.length > 0) {
+            throw new Error(
+                "Cannot cancel event with active tickets. Please refund all tickets first."
+            );
+        }
+
+        await ctx.db.patch(eventId, {is_cancelled: true});
+
+        const waitingListEntries = await ctx.db
+            .query("waitingList")
+            .withIndex("by_event_status", (q) => q.eq("eventId", eventId))
+            .collect();
+
+        for (const entry of waitingListEntries) {
+            await ctx.db.delete(entry._id);
+        }
+
+        return {success: true};
     }
 })

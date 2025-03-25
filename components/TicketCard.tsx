@@ -5,7 +5,6 @@ import {api} from "@/convex/_generated/api";
 import Spinner from "@/components/Spinner";
 import {Card, CardContent, CardFooter} from "@/components/ui/card";
 import {Badge} from "@/components/ui/badge";
-import {Button} from "@/components/ui/button";
 import {usePathname, useRouter} from "next/navigation";
 
 interface TicketCardProps {
@@ -14,7 +13,6 @@ interface TicketCardProps {
 
 const TicketCard = ({ticketId}: TicketCardProps) => {
     const pathname = usePathname();
-    const router = useRouter();
 
     const ticket = useQuery(api.tickets.getTicketWithDetails, {ticketId});
     if (!ticket || !ticket.event) {
@@ -29,10 +27,13 @@ const TicketCard = ({ticketId}: TicketCardProps) => {
             className={`flex flex-col justify-between transition duration-300 ease-in-out transform ${!pathname.includes("/event/") ? "hover:cursor-pointer hover:-translate-y-1 hover:shadow-lg" : ""}`}
         >
             <CardContent className="flex flex-col h-full justify-between pt-4">
-                <div className="flex flex-col space-y-2 mb-8 border-b pb-4">
-                    <div className="text-xl lg:text-2xl xl:text-3xl font-medium">{ticket.event.name}</div>
-                    <div>
-                        <Badge className="rounded-full bg-orange-500 font-medium">{ticket.event.category}</Badge>
+                <div className="flex items-baseline justify-between mb-8 border-b pb-4">
+                    <div className="flex flex-col space-y-2">
+                        <div className="text-xl lg:text-2xl xl:text-3xl font-medium">{ticket.event.name}</div>
+                        <div>
+                            <Badge className="rounded-full bg-orange-500 font-medium">{ticket.event.category}</Badge>
+                        </div>
+                        <div className="text-base lg:text-lg xl:text-xl text-gray-400">{ticket.event.description}</div>
                     </div>
                 </div>
                 <div className="flex flex-col space-y-2 border-b pb-8">
@@ -48,14 +49,6 @@ const TicketCard = ({ticketId}: TicketCardProps) => {
                         <div>📍</div>
                         <p>{ticket.event.location}</p>
                     </div>
-
-                    <Button
-                        className="w-full lg:w-auto rounded-full"
-                        onClick={() => router.push(`/tickets/${ticketId}`)}
-                    >
-                        View your ticket
-                    </Button>
-
                 </div>
             </CardContent>
             <CardFooter className="flex items-center justify-between">

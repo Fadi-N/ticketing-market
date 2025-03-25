@@ -15,5 +15,5 @@ export const TICKET_STATUS: Record<string, Doc<"tickets">["status"]> = {
     VALID: "valid",
     USED: "used",
     REFUNDED: "refunded",
-    CANCELLED: "concelled"
+    CANCELLED: "cancelled"
 } as const;

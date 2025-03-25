@@ -23,8 +23,8 @@ export default defineSchema({
         status: v.union(
             v.literal("valid"),
             v.literal("used"),
-            v.literal("refused"),
-            v.literal("concelled")
+            v.literal("refunded"),
+            v.literal("cancelled")
         ),
         paymentIntentId: v.optional(v.string()),
         amount: v.optional(v.number()),

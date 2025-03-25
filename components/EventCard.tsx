@@ -86,7 +86,7 @@ const EventCard = ({eventId}: EventCardProps) => {
             onClick={handleCardClick}
         >
             <CardContent className="flex flex-col h-full justify-between pt-4">
-                <div className="flex flex-col space-y-2 mb-12">
+                <div className="flex flex-col space-y-2 mb-6 border-b pb-4">
                     <div className="text-xl lg:text-2xl xl:text-3xl font-medium">{event.name}</div>
                     <div>
                         <Badge className="rounded-full bg-orange-500 font-medium">{event.category}</Badge>
@@ -113,29 +113,40 @@ const EventCard = ({eventId}: EventCardProps) => {
                         </p>
                     </div>
 
-                    {userTicket && (
-                        <div
-                            className="flex flex-col lg:flex-row justify-between space-y-4 lg:space-y-0 p-4 border rounded-lg bg-green-100 text-green-500">
-                            <div className="flex items-center justify-center space-x-2">
-                                <CircleCheck className="w-8 h-8"/>
-                                <div className="text-xl lg:text-2xl xl:text-3xl font-medium">You have a ticket!</div>
-                            </div>
-
-                            <Button
-                                className="w-full lg:w-auto rounded-full bg-green-500"
-                                onClick={() => router.push(`/tickets/${userTicket._id}`)}
-                            >
-                                View your ticket
-                            </Button>
-
+                    {pathname.includes("/event/") && (
+                        <div className="flex items-center space-x-2 justify-end py-4">
+                            <Badge className="rounded-full font-medium lg:text-2xl bg-gray-400">
+                                ${event.price.toFixed(2)}
+                            </Badge>
                         </div>
                     )}
-                </div>
 
-                {!isPastEvent && renderTicketStatus()}
-            </CardContent>
-        </Card>
-    );
+                    {userTicket && (
+                        <div
+                        className="flex flex-col lg:flex-row justify-between space-y-4 lg:space-y-0 p-4 border rounded-lg bg-green-100 text-green-500">
+                        <div className="flex items-center justify-center space-x-2">
+                        <CircleCheck className="w-8 h-8"/>
+                        <div className="text-xl lg:text-2xl xl:text-3xl font-medium">You have a ticket!</div>
+                        </div>
+
+                        <Button
+                        className="w-full lg:w-auto rounded-full bg-green-500"
+                        onClick={() => router.push(`/tickets/${userTicket._id}`)}
+                >
+                    View your ticket
+                </Button>
+
+            </div>
+            )}
+        </div>
+
+{
+    !isPastEvent && renderTicketStatus()
+}
+</CardContent>
+</Card>
+)
+    ;
 };
 
 export default EventCard;

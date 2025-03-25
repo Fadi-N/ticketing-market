@@ -1,4 +1,4 @@
-import {query} from "@/convex/_generated/server";
+import {mutation, query} from "@/convex/_generated/server";
 import {v} from "convex/values";
 
 export const getUserTicketForEvent = query({
@@ -26,4 +26,32 @@ export const getTicketWithDetails = query({
             event
         }
     }
+})
+
+export const getValidTicketsForEvent = query({
+    args: {eventId: v.id("events")},
+    handler: async (ctx, {eventId}) => {
+        return await ctx.db
+            .query("tickets")
+            .withIndex("by_event", (query) => query.eq("eventId", eventId))
+            .filter((query) =>
+                query.or(query.eq(query.field("status"), "valid"), query.eq(query.field("status"), "used"))
+            )
+            .collect();
+    }
+})
+
+export const updateTicketStatus = mutation({
+    args: {
+        ticketId: v.id("tickets"),
+        status: v.union(
+            v.literal("valid"),
+            v.literal("used"),
+            v.literal("refunded"),
+            v.literal("cancelled")
+        ),
+    },
+    handler: async (ctx, {ticketId, status}) => {
+        await ctx.db.patch(ticketId, {status});
+    },
 })
