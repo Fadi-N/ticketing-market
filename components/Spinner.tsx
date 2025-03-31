@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface SpinnerProps {
-    variant?: 'success' | 'error';
+    variant?: 'success' | 'error' | 'warning';
 }
 
 const Spinner = ({variant}: SpinnerProps) => {
@@ -11,7 +11,10 @@ const Spinner = ({variant}: SpinnerProps) => {
                 ? "w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full animate-spin"
                 : variant === "error"
                     ? "w-8 h-8 border-4 border-red-500 border-t-transparent rounded-full animate-spin"
-                    : "w-8 h-8 border-4 border-dark border-t-transparent rounded-full animate-spin"}></div>
+                    : variant === "warning"
+                        ? "w-8 h-8 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"
+                        : "w-8 h-8 border-4 border-dark border-t-transparent rounded-full animate-spin"}
+            ></div>
         </div>
     );
 };

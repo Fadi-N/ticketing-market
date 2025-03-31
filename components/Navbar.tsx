@@ -40,7 +40,12 @@ const Navbar = () => {
                     </SignedIn>
                     <SignedOut>
                         <SignInButton mode="modal">
-                            <Button variant="link">Sign In</Button>
+                            <Button
+                                className="text-white lg:text-lg xl:text-xl"
+                                variant="link"
+                            >
+                                Sign In
+                            </Button>
                         </SignInButton>
                     </SignedOut>
                 </div>

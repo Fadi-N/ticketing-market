@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useTransition} from 'react';
+import React, {useEffect, useTransition} from 'react';
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
@@ -12,9 +12,11 @@ import {useRouter} from "next/navigation";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
-import {Loader2} from "lucide-react";
+import {CalendarIcon, Loader2} from "lucide-react";
 import {Button} from "@/components/ui/button";
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {Card, CardContent, CardHeader} from "@/components/ui/card";
+import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
+import {Calendar} from "@/components/ui/calendar";
 
 const formSchema = z.object({
     name: z.string().min(1, "Event name is required"),
@@ -57,7 +59,6 @@ const EventForm = ({mode, initialData}: EventFormProps) => {
 
     const [isPending, startTransition] = useTransition();
 
-
     const form = useForm<FormData>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -72,6 +73,16 @@ const EventForm = ({mode, initialData}: EventFormProps) => {
             salesEnd: initialData ? new Date(initialData.salesEnd) : new Date(),
         }
     });
+
+    useEffect(() => {
+        const salesStart = form.getValues("salesStart");
+        const salesEnd = form.getValues("salesEnd");
+
+        if (salesStart && (!salesEnd || salesEnd < salesStart)) {
+            const salesStartDate = new Date(salesStart);
+            form.setValue("salesEnd", salesStartDate);
+        }
+    },[form.watch("salesStart")]);
 
     const onSubmit = async (values: FormData) => {
         if (!user?.id) return;
@@ -114,8 +125,10 @@ const EventForm = ({mode, initialData}: EventFormProps) => {
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <Card>
                     <CardHeader className="border-b">
-                        <div className="text-xl lg:text-2xl xl:text-3xl font-medium">{mode === "create" ? "Create event" : "Edit event"}</div>
-                        <div className="text-base lg:text-lg xl:text-xl text-gray-400">{mode === "create" ? "Create your event" : "Update your event details"}</div>
+                        <div
+                            className="text-xl lg:text-2xl xl:text-3xl font-medium">{mode === "create" ? "Create event" : "Edit event"}</div>
+                        <div
+                            className="text-base lg:text-lg xl:text-xl text-gray-400">{mode === "create" ? "Create your event" : "Update your event details"}</div>
                     </CardHeader>
                     <CardContent className="flex flex-col space-y-12 pt-4">
                         <div className="flex flex-col space-y-4">
@@ -179,23 +192,31 @@ const EventForm = ({mode, initialData}: EventFormProps) => {
                                 control={form.control}
                                 name="eventDate"
                                 render={({field}) => (
-                                    <FormItem>
+                                    <FormItem className="flex flex-col">
                                         <FormLabel>Event Date</FormLabel>
                                         <FormControl>
-                                            <Input
-                                                type="date"
-                                                {...field}
-                                                onChange={(e) => {
-                                                    field.onChange(
-                                                        e.target.value ? new Date(e.target.value) : null
-                                                    );
-                                                }}
-                                                value={
-                                                    field.value
-                                                        ? new Date(field.value).toISOString().split("T")[0]
-                                                        : ""
-                                                }
-                                            />
+                                            <Popover>
+                                                <PopoverTrigger asChild>
+                                                    <Button
+                                                        className="w-full justify-start text-left font-normal"
+                                                        variant="outline"
+                                                    >
+                                                        {field.value
+                                                            ? new Date(field.value).toLocaleDateString("en-CA").split("T")[0]
+                                                            : "Pick a date"}
+                                                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50"/>
+                                                    </Button>
+                                                </PopoverTrigger>
+                                                <PopoverContent className="w-auto p-0" align="start">
+                                                    <Calendar
+                                                        mode="single"
+                                                        selected={field.value}
+                                                        onSelect={(date) => field.onChange(date ? new Date(date) : null)}
+                                                        disabled={(date) => date < new Date()}
+                                                        initialFocus
+                                                    />
+                                                </PopoverContent>
+                                            </Popover>
                                         </FormControl>
                                         <FormMessage/>
                                     </FormItem>
@@ -250,22 +271,28 @@ const EventForm = ({mode, initialData}: EventFormProps) => {
                                 render={({field}) => (
                                     <FormItem>
                                         <FormLabel>Event sales start</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                type="date"
-                                                {...field}
-                                                onChange={(e) => {
-                                                    field.onChange(
-                                                        e.target.value ? new Date(e.target.value) : null
-                                                    );
-                                                }}
-                                                value={
-                                                    field.value
-                                                        ? new Date(field.value).toISOString().split("T")[0]
-                                                        : ""
-                                                }
-                                            />
-                                        </FormControl>
+                                        <Popover>
+                                            <PopoverTrigger asChild>
+                                                <Button
+                                                    className="w-full justify-start text-left font-normal"
+                                                    variant="outline"
+                                                >
+                                                    {field.value
+                                                        ? new Date(field.value).toLocaleDateString("en-CA").split("T")[0]
+                                                        : "Pick a date"}
+                                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50"/>
+                                                </Button>
+                                            </PopoverTrigger>
+                                            <PopoverContent className="w-auto p-0" align="start">
+                                                <Calendar
+                                                    mode="single"
+                                                    selected={field.value}
+                                                    onSelect={(date) => field.onChange(date ? new Date(date) : null)}
+                                                    disabled={(date) => date < new Date() || (form.getValues("eventDate") && date > new Date(form.getValues("eventDate")))}
+                                                    initialFocus
+                                                />
+                                            </PopoverContent>
+                                        </Popover>
                                         <FormMessage/>
                                     </FormItem>
                                 )}
@@ -277,22 +304,32 @@ const EventForm = ({mode, initialData}: EventFormProps) => {
                                 render={({field}) => (
                                     <FormItem>
                                         <FormLabel>Event sales end</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                type="date"
-                                                {...field}
-                                                onChange={(e) => {
-                                                    field.onChange(
-                                                        e.target.value ? new Date(e.target.value) : null
-                                                    );
-                                                }}
-                                                value={
-                                                    field.value
-                                                        ? new Date(field.value).toISOString().split("T")[0]
-                                                        : ""
-                                                }
-                                            />
-                                        </FormControl>
+                                        <Popover>
+                                            <PopoverTrigger asChild>
+                                                <Button
+                                                    className="w-full justify-start text-left font-normal"
+                                                    variant="outline"
+                                                >
+                                                    {field.value
+                                                        ? new Date(field.value).toLocaleDateString("en-CA").split("T")[0]
+                                                        : "Pick a date"}
+                                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50"/>
+                                                </Button>
+                                            </PopoverTrigger>
+                                            <PopoverContent className="w-auto p-0" align="start">
+                                                <Calendar
+                                                    mode="single"
+                                                    selected={field.value}
+                                                    onSelect={(date) => field.onChange(date ? new Date(date) : null)}
+                                                    disabled={(date) =>
+                                                        date < new Date() ||
+                                                        (form.getValues("eventDate") && date > new Date(form.getValues("eventDate"))) ||
+                                                        (form.getValues("salesStart") && date < new Date(form.getValues("salesStart")))
+                                                    }
+                                                    initialFocus
+                                                />
+                                            </PopoverContent>
+                                        </Popover>
                                         <FormMessage/>
                                     </FormItem>
                                 )}

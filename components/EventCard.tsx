@@ -10,7 +10,9 @@ import {usePathname, useRouter} from "next/navigation";
 import {Button} from "@/components/ui/button";
 import PurchaseTicket from "@/components/PurchaseTicket";
 import {Badge} from "@/components/ui/badge";
-import {CircleCheck} from "lucide-react";
+import {CircleCheck, Frown} from "lucide-react";
+import AnnouncementCard from "@/components/AnnouncementCard";
+import Spinner from "@/components/Spinner";
 
 
 interface EventCardProps {
@@ -39,14 +41,22 @@ const EventCard = ({eventId}: EventCardProps) => {
 
         if (availability.purchasedCount >= availability.totalTickets) {
             return (
-                <p>
-                    SOLD OUT
-                </p>
+                <AnnouncementCard
+                    icon={<Frown width={60} height={60} />}
+                    title="Sold out!"
+                    description="All tickets are sold out."
+                    customClass="bg-red-100 text-red-500"
+                />
             )
         }
 
         return (
-            <p>Queue position #{queuePosition.position}</p>
+            <AnnouncementCard
+                icon={<Spinner variant="warning"/>}
+                title="Sold out! You&rsquo;re in the waiting queue for ticket availability."
+                description={`Queue position #${queuePosition.position}`}
+                customClass="bg-orange-100 text-orange-500"
+            />
         )
     }
 
