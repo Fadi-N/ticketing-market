@@ -91,7 +91,9 @@ const PurchaseTicket = ({eventId}: PurchaeTicketProps) => {
                         ? "Redirecting to checkout..."
                         : "Purchase Your Ticket Now"}
                 </Button>
-                <ReleaseTicket eventId={eventId} waitingListId={queuePosition._id}/>
+                {queuePosition && (
+                    <ReleaseTicket eventId={eventId} waitingListId={queuePosition._id}/>
+                )}
             </div>
         </div>
     );

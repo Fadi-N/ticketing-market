@@ -42,6 +42,10 @@ const SellerDashboard = () => {
         }
     }, [stripeConnectId])
 
+    if (stripeConnectId === undefined) {
+        return <Spinner/>
+    }
+
     const fetchAccountStatus = async () => {
         if (stripeConnectId) {
             try {
@@ -61,7 +65,7 @@ const SellerDashboard = () => {
             }
         } catch (error) {
             console.error("Error accessing Stripe Connect portal", error);
-            setError(error);
+            setError(true);
         }
     }
 
@@ -75,7 +79,7 @@ const SellerDashboard = () => {
         } catch (error) {
             console.error("Error connecting Seller account with Stripe", error);
             setAccountCreatePending(false);
-            setError(error);
+            setError(true);
         }
     }
 
@@ -85,7 +89,7 @@ const SellerDashboard = () => {
 
         try {
             const {url} =
-                await createStripeConnectAccountLink(stripeConnectId);
+                await createStripeConnectAccountLink(stripeConnectId ?? "");
             router.push(url);
         } catch (error) {
             console.error("Error creating Stripe Connect account link", error);

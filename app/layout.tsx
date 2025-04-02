@@ -1,5 +1,5 @@
 import type {Metadata} from "next";
-import {Bebas_Neue, Poppins} from "next/font/google";
+import {Bebas_Neue} from "next/font/google";
 import "./globals.css";
 import {ClerkProvider} from "@clerk/nextjs";
 import {ConvexClientProvider} from "@/components/ConvexClientProvider";

@@ -10,11 +10,8 @@ import {api} from "@/convex/_generated/api";
 import Spinner from "@/components/Spinner";
 import QRCode from "react-qr-code";
 
-interface TicketProps {
-    ticketId: Id<"tickets">;
-}
 
-const Ticket = ({ticketId}: TicketProps) => {
+const Ticket = ({ ticketId }: { ticketId: Id<"tickets"> }) => {
     const ticket = useQuery(api.tickets.getTicketWithDetails, {ticketId});
     const user = useQuery(api.users.getUserById, {userId: ticket?.userId ?? ""});
 
@@ -75,7 +72,7 @@ const Ticket = ({ticketId}: TicketProps) => {
                             </div>
                         </div>
                         <div className="border-s-2 flex-1 flex flex-col space-y-10 items-center justify-center">
-                            <QRCode value={ticket._id} className="w-32 h-32"/>
+                            <QRCode value={ticket._id ? ticket._id : ""} className="w-32 h-32"/>
                             <div className="flex flex-col items-center">
                                 <p>Ticket ID</p>
                                 <p className="text-sm text-gray-400">{ticket._id}</p>
@@ -105,8 +102,11 @@ const Ticket = ({ticketId}: TicketProps) => {
                 <div>
                     <p>Purchase Date</p>
                     <p className="text-sm text-gray-400">
-                        {new Date(ticket.purchasedAt).toLocaleString()}
+                        <p className="text-sm text-gray-400">
+                            {ticket.purchasedAt ? new Date(ticket.purchasedAt).toLocaleDateString() : "Unknown date"}
+                        </p>
                     </p>
+
                 </div>
                 <Badge
                     className={ticket.event.is_cancelled

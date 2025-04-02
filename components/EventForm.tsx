@@ -338,7 +338,6 @@ const EventForm = ({mode, initialData}: EventFormProps) => {
                         <Button
                             className="w-full rounded-full"
                             type="submit"
-                            onSubmit={onSubmit}
                             disabled={isPending}
                         >
                             {isPending ? (

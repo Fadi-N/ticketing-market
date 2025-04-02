@@ -5,7 +5,7 @@ import {api} from "@/convex/_generated/api";
 import Spinner from "@/components/Spinner";
 import {Card, CardContent, CardFooter} from "@/components/ui/card";
 import {Badge} from "@/components/ui/badge";
-import {usePathname, useRouter} from "next/navigation";
+import {usePathname} from "next/navigation";
 
 interface TicketCardProps {
     ticketId: Id<"tickets">
@@ -40,7 +40,8 @@ const TicketCard = ({ticketId}: TicketCardProps) => {
                     <div className="flex items-center space-x-2">
                         <div>🗓</div>
                         <p>
-                            {new Date(ticket.event.eventDate).toLocaleDateString()}
+                            {ticket.event.eventDate ? new Date(ticket.event.eventDate).toLocaleDateString() : "Unknown date"}
+
                             {" "}
                             {isPastEvent && "(Ended)"}
                         </p>
@@ -55,8 +56,7 @@ const TicketCard = ({ticketId}: TicketCardProps) => {
                 <div>
                     <p>Purchase Date</p>
                     <p className="text-sm text-gray-400">
-                        {new Date(ticket.purchasedAt).toLocaleString()}
-                    </p>
+                        {ticket.purchasedAt ? new Date(ticket.purchasedAt).toLocaleDateString() : "Unknown date"}                    </p>
                 </div>
                 <Badge
                     className={ticket.event.is_cancelled

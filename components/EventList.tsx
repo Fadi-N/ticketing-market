@@ -5,8 +5,7 @@ import {useQuery} from "convex/react";
 import {api} from "@/convex/_generated/api";
 import Spinner from "@/components/Spinner";
 import EventCard from "@/components/EventCard";
-import {Card, CardContent} from "@/components/ui/card";
-import {Frown, TriangleAlert} from "lucide-react";
+import {Frown} from "lucide-react";
 import AnnouncementCard from "@/components/AnnouncementCard";
 
 

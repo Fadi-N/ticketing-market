@@ -1,10 +1,9 @@
 import React from 'react';
 import {Doc} from "@/convex/_generated/dataModel";
 import {Metrics} from "@/convex/events";
-import {Card, CardContent, CardFooter} from "@/components/ui/card";
+import {Card, CardContent} from "@/components/ui/card";
 import {Badge} from "@/components/ui/badge";
-import {Button} from "@/components/ui/button";
-import {usePathname, useRouter} from "next/navigation";
+import {usePathname} from "next/navigation";
 import CancelEventButton from "@/components/CancelEventButton";
 
 interface SellerEventCardProps {
@@ -13,7 +12,6 @@ interface SellerEventCardProps {
 
 const SellerEventCard = ({event}: SellerEventCardProps) => {
     const pathname = usePathname();
-    const router = useRouter();
 
     const isPastEvent = event.eventDate < Date.now();
 
