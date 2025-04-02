@@ -1,37 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ticketing Market
 
-## Getting Started
+Ticketing Market is a modern web application that allows users to buy and sell tickets for events. The system offers advanced event management features, integration with payment systems, and flexible user management.
 
-First, run the development server:
+## 📌 System Architecture
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The application is designed as a modern web system based on a serverless architecture and dynamic data management. Key components:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Frontend**: Next.js + React, using Tailwind CSS and shadcn for building the interface.
+- **Backend**: Convex - a reactive database that allows real-time updates.
+- **Authorization**: Clerk provides secure login and user management.
+- **Payments**: Stripe handles financial transactions.
+- **Typing**: TypeScript ensures safe and scalable code.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 📊 Architecture Diagram
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Below is a diagram illustrating the dependencies between key components of the application:
 
-## Learn More
+![Architecture Diagram](./public/architecture_diagram.png)
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 Technologies
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Next.js** – server-side rendering and SEO optimization.
+- **React** – dynamic user interfaces.
+- **Convex** – scalable database with real-time synchronization capabilities.
+- **shadcn** – ready-to-use UI components for consistent look and feel.
+- **Tailwind CSS** – flexible styles without writing custom CSS.
+- **Clerk** – handles user login and management.
+- **Stripe** – payment processing and transactions.
+- **TypeScript** – strong typing for greater code stability.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🎯 Key Features
 
-## Deploy on Vercel
+### For Users
+- Browse and search for events.
+- Purchase tickets online using Stripe.
+- Register and log in via Clerk.
+- Manage purchased tickets.
+- Join waiting lists.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### For Event Organizers
+- Create events and set ticket prices.
+- Manage seat availability.
+- View participant lists.
+- Monitor transaction statuses.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# ticketing-market
+## 📂 Folder Structure
+
+- **app/** – main application folder containing page logic and Next.js routing. Each file in this folder corresponds to a specific route in the app.
+    - **layout.tsx** – main app layout, including navigation.
+    - **page.tsx** – homepage of the application.
+    - **events/** – pages related to events, e.g., browsing and event details.
+    - **tickets/** – pages related to managing purchased tickets.
+    - **api/** – API routes handling backend operations (e.g., Stripe webhooks).
+- **components/** – reusable components.
+- **convex/** – backend functions and database schemas.
+- **lib/** – configurations and helper functions.
+- **public/** – static assets.
+
+## 📊 Data Structure
+
+The app uses Convex to manage real-time data. Table structure:
+
+- **events** – stores information about events.
+- **tickets** – tickets assigned to users.
+- **users** – data about application users.
+- **waitingList** – list of people waiting for tickets.
+
+## 🛠 Installation and Running
+
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/Fadi-N/ticketing-market.git
+2. **Navigate to the project directory:**
+   ```sh
+   cd ticketing-market
+3. **Install dependencies:**
+   ```sh
+   npm install
+4. **Configure environment variables:** Create a `.env.local` file and add the required API keys for Convex, Clerk and Stripe.
+   
+
+5. **Run the Convex database:**
+   ```sh
+   npx convex dev
+6. **Run Stripe in webhook listening mode:**
+   ```sh
+   stripe listen --forward-to localhost:3000/api/webhooks/stripe
+7. **Run the app in development mode:**
+   ```sh
+   npm run dev
+
+The app will be available at http://localhost:3000.
