@@ -2,6 +2,9 @@
 
 Ticketing Market is a modern web application that allows users to buy and sell tickets for events. The system offers advanced event management features, integration with payment systems, and flexible user management.
 
+## 🌍 Live Demo
+The application is available at: [🔗 Ticketing Market](https://ticketing-market.vercel.app)
+
 ## 📌 System Architecture
 
 The application is designed as a modern web system based on a serverless architecture and dynamic data management. Key components:
