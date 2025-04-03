@@ -26,7 +26,7 @@ const PurchaseSuccessPage = async () => {
             <Card className="bg-green-100 text-green-500">
                 <CardHeader className="flex flex-col items-center justify-center space-y-2">
                     <div className="flex items-center min-h-[200px]">
-                        <CircleCheck width={60} height={60}/>
+                        <CircleCheck className="w-12 h-12 lg:w-20 lg:h-20"/>
                     </div>
                     <div className="text-xl lg:text-2xl xl:text-3xl font-medium">
                         Ticket Purchase Successful!

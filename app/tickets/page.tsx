@@ -63,7 +63,7 @@ const MyTicketsPage = () => {
 
             {tickets.length === 0 && (
                 <AnnouncementCard
-                    icon={<Info width={60} height={60}/>}
+                    icon={<Info className="w-12 h-12 lg:w-20 lg:h-20"/>}
                     title="No ticket yet"
                     description="All you tickets will be listed here."
                 />

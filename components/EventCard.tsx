@@ -39,25 +39,16 @@ const EventCard = ({eventId}: EventCardProps) => {
     const renderQueuePosition = () => {
         if (!queuePosition || queuePosition.status !== "waiting") return null;
 
-        if (availability.purchasedCount >= availability.totalTickets) {
+        if (availability.purchasedCount < availability.totalTickets) {
             return (
                 <AnnouncementCard
-                    icon={<Frown width={60} height={60} />}
-                    title="Sold out!"
-                    description="All tickets are sold out."
-                    customClass="bg-red-100 text-red-500"
+                    icon={<Spinner variant="warning"/>}
+                    title="Sold out! You&rsquo;re in the waiting queue for ticket availability."
+                    description={`Queue position #${queuePosition.position}`}
+                    customClass="bg-orange-100 text-orange-500"
                 />
             )
         }
-
-        return (
-            <AnnouncementCard
-                icon={<Spinner variant="warning"/>}
-                title="Sold out! You&rsquo;re in the waiting queue for ticket availability."
-                description={`Queue position #${queuePosition.position}`}
-                customClass="bg-orange-100 text-orange-500"
-            />
-        )
     }
 
     const renderTicketStatus = () => {
@@ -71,9 +62,10 @@ const EventCard = ({eventId}: EventCardProps) => {
                     )}
                     {renderQueuePosition()}
                     {queuePosition.status === "expired" && (
-                        <>
-                            <p>Offer expired</p>
-                        </>
+                        <AnnouncementCard
+                            icon={<Frown className="w-12 h-12 lg:w-20 lg:h-20"/>}
+                            title="Offer expired!"
+                        />
                     )}
                 </>
             )
@@ -125,7 +117,7 @@ const EventCard = ({eventId}: EventCardProps) => {
 
                     {pathname.includes("/event/") && (
                         <div className="flex items-center space-x-2 justify-end py-4">
-                            <Badge className="rounded-full font-medium lg:text-2xl bg-gray-400">
+                            <Badge className="rounded-full text-lg font-medium lg:text-2xl">
                                 ${event.price.toFixed(2)}
                             </Badge>
                         </div>
@@ -133,30 +125,28 @@ const EventCard = ({eventId}: EventCardProps) => {
 
                     {userTicket && (
                         <div
-                        className="flex flex-col lg:flex-row justify-between space-y-4 lg:space-y-0 p-4 border rounded-lg bg-green-100 text-green-500">
-                        <div className="flex items-center justify-center space-x-2">
-                        <CircleCheck className="w-8 h-8"/>
-                        <div className="text-xl lg:text-2xl xl:text-3xl font-medium">You have a ticket!</div>
+                            className="flex flex-col lg:flex-row justify-between space-y-4 lg:space-y-0 p-4 border rounded-lg bg-green-100 text-green-500">
+                            <div className="flex items-center justify-center space-x-2">
+                                <CircleCheck className="w-8 h-8"/>
+                                <div className="text-xl lg:text-2xl xl:text-3xl font-medium">You have a ticket!</div>
+                            </div>
+
+                            <Button
+                                className="w-full lg:w-auto rounded-full bg-green-500"
+                                onClick={() => router.push(`/tickets/${userTicket._id}`)}
+                            >
+                                View your ticket
+                            </Button>
+
                         </div>
+                    )}
+                </div>
 
-                        <Button
-                        className="w-full lg:w-auto rounded-full bg-green-500"
-                        onClick={() => router.push(`/tickets/${userTicket._id}`)}
-                >
-                    View your ticket
-                </Button>
-
-            </div>
-            )}
-        </div>
-
-{
-    !isPastEvent && renderTicketStatus()
-}
-</CardContent>
-</Card>
-)
-    ;
+                {!isPastEvent && renderTicketStatus()}
+            </CardContent>
+        </Card>
+    )
+        ;
 };
 
 export default EventCard;

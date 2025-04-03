@@ -151,8 +151,8 @@ const SellerDashboard = () => {
             {stripeConnectId && accountStatus && (
                 <div>
                     <div className="flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4">
-                        <Card className="flex-1 min-h-96">
-                            <CardContent className="flex lg:flex-col justify-between h-full">
+                        <Card>
+                            <CardContent className="flex flex-col h-full space-y-10">
                                 <div className="flex flex-col pt-4 space-y-10">
                                     <div className="flex flex-col space-y-2">
                                         <div className="text-xl lg:text-2xl xl:text-3xl font-medium">
@@ -227,7 +227,7 @@ const SellerDashboard = () => {
                                 <div className="flex flex-col space-y-2 mb-4">
                                     <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Required Information
                                     </div>
-                                    <div className="flex space-x-12">
+                                    <div className="flex flex-col space-y-4 lg:flex-row lg:space-x-12 lg:space-y-0">
                                         {accountStatus.requirements.currently_due.length > 0 && (
                                             <div className="flex flex-col space-y-2">
                                                 <div

@@ -9,7 +9,7 @@ import {WAITING_LIST_STATUS} from "@/convex/constants";
 import {Button} from "@/components/ui/button";
 import {ConvexError} from "convex/values";
 import {toast} from "sonner";
-import {CalendarClock, Coins, Frown} from "lucide-react";
+import {CalendarClock, CircleX, Coins, Frown} from "lucide-react";
 import AnnouncementCard from "@/components/AnnouncementCard";
 
 interface JoinQueueProps {
@@ -30,6 +30,8 @@ const JoinQueue = ({eventId, userId}: JoinQueueProps) => {
         eventId,
         userId
     })
+
+    const isEventOwner = userId === event?.userId;
 
     const handleJoinQueue = async () => {
         try {
@@ -77,32 +79,44 @@ const JoinQueue = ({eventId, userId}: JoinQueueProps) => {
                     queuePosition.offerExpiredAt &&
                     queuePosition.offerExpiredAt <= Date.now())) && (
                 <>
-                    {isPastEvent ? (
+                    {isEventOwner
+                        ? (
                             <AnnouncementCard
-                                icon={<CalendarClock width={60} height={60}/>}
-                                title="Event has ended"
-                                customClass="bg-red-100 text-red-500 w-full"
+                                icon={<CircleX className="w-12 h-12 lg:w-20 lg:h-20"/>}
+                                title="You cannot buy a ticket for your own event"
+                                customClass="bg-orange-100 text-orange-500"
                             />
-                    ) : availability.purchasedCount >= availability?.totalTickets ? (
-                            <AnnouncementCard
-                                icon={<Frown width={60} height={60}/>}
-                                title="Event is sold out"
-                                customClass="bg-red-100 text-red-500 w-full"
-                            />
-                    ) : (
-                        <Button
-                            className="w-full rounded-full"
-                            onClick={handleJoinQueue}
-                            disabled={isPastEvent}
-                        >
-                            <Coins width={20} height={20}/>
-                            Buy Ticket
-                        </Button>
-                    )}
+                        ): isPastEvent
+                            ? (
+                                <AnnouncementCard
+                                    icon={<CalendarClock className="w-12 h-12 lg:w-20 lg:h-20"/>}
+                                    title="Event has ended"
+                                    customClass="bg-red-100 text-red-500 w-full"
+                                />
+                            ) : availability.purchasedCount >= availability.totalTickets
+                                ? (
+                                    <AnnouncementCard
+                                        icon={<Frown className="w-12 h-12 lg:w-20 lg:h-20"/>}
+                                        title="Sold out!"
+                                        description="All tickets are sold out."
+                                        customClass="bg-red-100 text-red-500"
+                                    />
+                                ) : (
+                                    <Button
+                                        className="w-full rounded-full"
+                                        onClick={handleJoinQueue}
+                                        disabled={isPastEvent}
+                                    >
+                                        <Coins width={20} height={20}/>
+                                        Buy Ticket
+                                    </Button>
+                                )}
                 </>
-            )}
+            )
+            }
         </>
-    );
+    )
+        ;
 };
 
 export default JoinQueue;

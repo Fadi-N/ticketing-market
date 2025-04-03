@@ -38,7 +38,7 @@ const EventList = () => {
                     </div>
                 ) : (
                     <AnnouncementCard
-                        icon={<Frown width={60} height={60}/>}
+                        icon={<Frown className="w-12 h-12 lg:w-20 lg:h-20"/>}
                         title="Nothing cooking yet."
                         description="Come back later, we might surprise you with more than just tumbleweeds!"
                     />

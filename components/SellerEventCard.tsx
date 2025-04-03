@@ -1,17 +1,22 @@
+'use client'
+
 import React from 'react';
 import {Doc} from "@/convex/_generated/dataModel";
 import {Metrics} from "@/convex/events";
-import {Card, CardContent} from "@/components/ui/card";
+import {Card, CardContent, CardFooter} from "@/components/ui/card";
 import {Badge} from "@/components/ui/badge";
-import {usePathname} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import CancelEventButton from "@/components/CancelEventButton";
+import {CalendarPlus} from "lucide-react";
+import {Button} from "@/components/ui/button";
 
 interface SellerEventCardProps {
-    event: Doc<"events"> & {metrics: Metrics}
+    event: Doc<"events"> & { metrics: Metrics }
 }
 
 const SellerEventCard = ({event}: SellerEventCardProps) => {
     const pathname = usePathname();
+    const router = useRouter();
 
     const isPastEvent = event.eventDate < Date.now();
 
@@ -28,11 +33,8 @@ const SellerEventCard = ({event}: SellerEventCardProps) => {
                         </div>
                         <div className="text-base lg:text-lg xl:text-xl text-gray-400">{event.description}</div>
                     </div>
-                    <div className="flex items-center space-x-2">
-                        <CancelEventButton eventId={event._id}/>
-                    </div>
                 </div>
-                <div className="flex flex-col space-y-2 border-b pb-8">
+                <div className={`flex flex-col space-y-2 pb-8 ${!isPastEvent ? "border-b" : ""}`}>
                     <div className="flex items-center space-x-2">
                         <div>🗓</div>
                         <p>
@@ -47,6 +49,16 @@ const SellerEventCard = ({event}: SellerEventCardProps) => {
                     </div>
                 </div>
             </CardContent>
+            {!isPastEvent && (
+                <CardFooter className="flex flex-col space-y-2 lg:space-x-2 lg:space-y-0 lg:flex-row">
+                    <Button className="w-full rounded-full"
+                            onClick={() => router.push(`/event/${event._id}/edit`)}>
+                        <CalendarPlus width={20} height={20}/>
+                        Edit Event
+                    </Button>
+                    <CancelEventButton eventId={event._id}/>
+                </CardFooter>
+            )}
         </Card>
     );
 };

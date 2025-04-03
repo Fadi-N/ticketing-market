@@ -16,9 +16,9 @@ const SellerEventList = () => {
     const pastEvents = events.filter((e) => e.eventDate <= Date.now());
 
     return (
-        <div className="p-8">
+        <div>
             {upcomingEvents.length > 0 && (
-                <div>
+                <div className="flex flex-col space-y-4">
                     <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Upcoming events</div>
                     <div>
                         {upcomingEvents.map((event) => (
@@ -29,7 +29,7 @@ const SellerEventList = () => {
             )}
 
             {pastEvents.length > 0 && (
-                <div>
+                <div className="flex flex-col space-y-4">
                     <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Past events</div>
                     <div>
                         {pastEvents.map((event) => (

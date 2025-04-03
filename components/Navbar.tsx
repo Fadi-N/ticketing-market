@@ -8,7 +8,7 @@ const Navbar = () => {
     return (
         <>
             <nav className="navbar flex justify-between items-center p-8 shadow">
-                <Link href="/">
+                <Link className="hidden lg:block" href="/">
                     <div className="text-xl lg:text-2xl xl:text-3xl font-medium">
                         Ticket Marketing
                     </div>
@@ -25,6 +25,14 @@ const Navbar = () => {
                                     variant="link"
                                 >
                                     Dashboard
+                                </Button>
+                            </Link>
+                            <Link href="/seller/events" className="border-e">
+                                <Button
+                                    className="text-white lg:text-lg xl:text-xl"
+                                    variant="link"
+                                >
+                                    My events
                                 </Button>
                             </Link>
                             <Link href="/tickets" className="border-e">

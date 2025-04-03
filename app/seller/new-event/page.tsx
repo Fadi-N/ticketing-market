@@ -13,11 +13,11 @@ const NewEventPage = () => {
         <div className="p-8 space-y-4">
             <div className="flex items-center justify-between">
                 <Button
-                    className="w-full lg:w-auto rounded-full"
-                    onClick={() => router.push("/seller")}
+                    className="rounded-full"
+                    onClick={() => router.push("/seller/events")}
                 >
                     <ArrowLeft width={20} height={20}/>
-                    Back to dashboard
+                    Back to events
                 </Button>
             </div>
             <EventForm mode="create"/>
