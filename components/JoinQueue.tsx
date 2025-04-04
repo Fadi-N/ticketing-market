@@ -9,8 +9,10 @@ import {WAITING_LIST_STATUS} from "@/convex/constants";
 import {Button} from "@/components/ui/button";
 import {ConvexError} from "convex/values";
 import {toast} from "sonner";
-import {CalendarClock, CircleX, Coins, Frown} from "lucide-react";
+import {CalendarClock, CircleX, Coins} from "lucide-react";
 import AnnouncementCard from "@/components/AnnouncementCard";
+import PurchaseTicket from "@/components/PurchaseTicket";
+import {usePathname} from "next/navigation";
 
 interface JoinQueueProps {
     eventId: Id<"events">,
@@ -18,6 +20,7 @@ interface JoinQueueProps {
 }
 
 const JoinQueue = ({eventId, userId}: JoinQueueProps) => {
+    const pathname = usePathname()
     const joinWaitingList = useMutation(api.events.joinWaitingList);
 
     const event = useQuery(api.events.getById, {eventId});
@@ -79,44 +82,40 @@ const JoinQueue = ({eventId, userId}: JoinQueueProps) => {
                     queuePosition.offerExpiredAt &&
                     queuePosition.offerExpiredAt <= Date.now())) && (
                 <>
-                    {isEventOwner
-                        ? (
+                    {isEventOwner && (
+                        <AnnouncementCard
+                            icon={<CircleX className="w-12 h-12 lg:w-20 lg:h-20"/>}
+                            title="You cannot buy a ticket for your own event"
+                            customClass="bg-orange-100 text-orange-500"
+                        />
+                    )}
+
+                        {isPastEvent && (
                             <AnnouncementCard
-                                icon={<CircleX className="w-12 h-12 lg:w-20 lg:h-20"/>}
-                                title="You cannot buy a ticket for your own event"
-                                customClass="bg-orange-100 text-orange-500"
+                                icon={<CalendarClock className="w-12 h-12 lg:w-20 lg:h-20"/>}
+                                title="Event has ended"
+                                customClass="bg-red-100 text-red-500 w-full"
                             />
-                        ): isPastEvent
-                            ? (
-                                <AnnouncementCard
-                                    icon={<CalendarClock className="w-12 h-12 lg:w-20 lg:h-20"/>}
-                                    title="Event has ended"
-                                    customClass="bg-red-100 text-red-500 w-full"
-                                />
-                            ) : availability.purchasedCount >= availability.totalTickets
-                                ? (
-                                    <AnnouncementCard
-                                        icon={<Frown className="w-12 h-12 lg:w-20 lg:h-20"/>}
-                                        title="Sold out!"
-                                        description="All tickets are sold out."
-                                        customClass="bg-red-100 text-red-500"
-                                    />
-                                ) : (
-                                    <Button
-                                        className="w-full rounded-full"
-                                        onClick={handleJoinQueue}
-                                        disabled={isPastEvent}
-                                    >
-                                        <Coins width={20} height={20}/>
-                                        Buy Ticket
-                                    </Button>
-                                )}
+                        )}
+
+                        {availability.purchasedCount < availability.totalTickets && (
+                            <Button
+                                className="w-full rounded-full"
+                                onClick={handleJoinQueue}
+                                disabled={isPastEvent}
+                            >
+                                <Coins width={20} height={20}/>
+                                Buy Ticket
+                            </Button>
+                        )}
                 </>
-            )
-            }
+            )}
+
+            {!queuePosition || queuePosition.status === WAITING_LIST_STATUS.OFFERED && pathname.includes("/event/") && (
+                <PurchaseTicket eventId={eventId}/>
+            )}
         </>
-    )
-        ;
+    );
 };
 
 export default JoinQueue;

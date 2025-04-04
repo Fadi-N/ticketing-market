@@ -57,7 +57,7 @@ const EventCard = ({eventId}: EventCardProps) => {
         if (queuePosition) {
             return (
                 <>
-                    {queuePosition.status === "offered" && (
+                    {queuePosition.status === "offered" && !pathname.includes("/event/") && (
                         <PurchaseTicket eventId={eventId}/>
                     )}
                     {renderQueuePosition()}
