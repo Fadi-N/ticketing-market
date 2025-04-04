@@ -7,8 +7,9 @@ import {Card, CardContent, CardFooter} from "@/components/ui/card";
 import {Badge} from "@/components/ui/badge";
 import {usePathname, useRouter} from "next/navigation";
 import CancelEventButton from "@/components/CancelEventButton";
-import {CalendarPlus} from "lucide-react";
+import {Ban, CalendarPlus} from "lucide-react";
 import {Button} from "@/components/ui/button";
+import AnnouncementCard from "@/components/AnnouncementCard";
 
 interface SellerEventCardProps {
     event: Doc<"events"> & { metrics: Metrics }
@@ -49,18 +50,30 @@ const SellerEventCard = ({event}: SellerEventCardProps) => {
                     </div>
                 </div>
             </CardContent>
-            {!isPastEvent && (
-                <CardFooter className="flex flex-col space-y-2 lg:space-x-2 lg:space-y-0 lg:flex-row">
-                    <Button className="w-full rounded-full"
-                            onClick={() => router.push(`/event/${event._id}/edit`)}>
-                        <CalendarPlus width={20} height={20}/>
-                        Edit Event
-                    </Button>
-                    <CancelEventButton eventId={event._id}/>
-                </CardFooter>
-            )}
+
+            <CardFooter className="flex flex-col space-y-2 lg:space-x-2 lg:space-y-0 lg:flex-row">
+                {!isPastEvent && !event.is_cancelled ? (
+                    <>
+                        <Button
+                            className="w-full rounded-full"
+                            onClick={() => router.push(`/event/${event._id}/edit`)}
+                        >
+                            <CalendarPlus width={20} height={20}/>
+                            Edit Event
+                        </Button>
+                        <CancelEventButton eventId={event._id}/>
+                    </>
+                ) : (
+                    <AnnouncementCard
+                        icon={<Ban className="w-12 h-12 lg:w-20 lg:h-20"/>}
+                        title="Cancelled!"
+                        customClass="bg-red-100 text-red-500"
+                    />
+                )}
+            </CardFooter>
         </Card>
-    );
+    )
+        ;
 };
 
 export default SellerEventCard;

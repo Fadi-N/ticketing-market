@@ -30,7 +30,7 @@ const Ticket = ({ ticketId }: { ticketId: Id<"tickets"> }) => {
                         </div>
                         <div className="text-base lg:text-lg xl:text-xl text-gray-400">{ticket.event.description}</div>
                     </div>
-                    <div className="flex border-b pb-8">
+                    <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 border-b pb-8">
                         <div className="flex-1 flex flex-col space-y-2">
                             <div className="flex items-center space-x-2">
                                 <div>🗓</div>
@@ -71,7 +71,7 @@ const Ticket = ({ ticketId }: { ticketId: Id<"tickets"> }) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="border-s-2 flex-1 flex flex-col space-y-10 items-center justify-center">
+                        <div className="lg:border-s-2 flex-1 flex flex-col space-y-10 items-center justify-center">
                             <QRCode value={ticket._id ? ticket._id : ""} className="w-32 h-32"/>
                             <div className="flex flex-col items-center">
                                 <p>Ticket ID</p>

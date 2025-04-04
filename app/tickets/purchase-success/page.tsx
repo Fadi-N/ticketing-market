@@ -1,11 +1,11 @@
 import React from 'react';
-import {Card, CardHeader} from "@/components/ui/card";
 import {CircleCheck} from "lucide-react";
 import {auth} from "@clerk/nextjs/server";
 import {redirect} from "next/navigation";
 import {getConvexClient} from "@/lib/convex";
 import {api} from "@/convex/_generated/api";
 import Ticket from "@/components/Ticket";
+import AnnouncementCard from "@/components/AnnouncementCard";
 
 const PurchaseSuccessPage = async () => {
     const {userId} = await auth();
@@ -23,19 +23,12 @@ const PurchaseSuccessPage = async () => {
 
     return (
         <div className="p-8 flex flex-col space-y-4">
-            <Card className="bg-green-100 text-green-500">
-                <CardHeader className="flex flex-col items-center justify-center space-y-2">
-                    <div className="flex items-center min-h-[200px]">
-                        <CircleCheck className="w-12 h-12 lg:w-20 lg:h-20"/>
-                    </div>
-                    <div className="text-xl lg:text-2xl xl:text-3xl font-medium">
-                        Ticket Purchase Successful!
-                    </div>
-                    <div className="text-base lg:text-lg xl:text-xl">
-                        Your ticket has been successfully purchased.
-                    </div>
-                </CardHeader>
-            </Card>
+            <AnnouncementCard
+                icon={<CircleCheck className="w-12 h-12 lg:w-20 lg:h-20"/>}
+                title="Ticket Purchase Successful!"
+                description="Your ticket has been successfully purchased."
+                customClass="bg-green-100 text-green-500"
+            />
 
             <Ticket ticketId={latestTicket._id}/>
         </div>

@@ -20,7 +20,7 @@ const SellerEventList = () => {
             {upcomingEvents.length > 0 && (
                 <div className="flex flex-col space-y-4">
                     <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Upcoming events</div>
-                    <div>
+                    <div className="flex flex-col space-y-4">
                         {upcomingEvents.map((event) => (
                             <SellerEventCard key={event._id} event={event}/>
                         ))}
@@ -31,7 +31,7 @@ const SellerEventList = () => {
             {pastEvents.length > 0 && (
                 <div className="flex flex-col space-y-4">
                     <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Past events</div>
-                    <div>
+                    <div className="flex flex-col space-y-4">
                         {pastEvents.map((event) => (
                             <SellerEventCard key={event._id} event={event}/>
                         ))}

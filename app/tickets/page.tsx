@@ -8,6 +8,7 @@ import {Badge} from "@/components/ui/badge";
 import {Info} from "lucide-react";
 import TicketCard from "@/components/TicketCard";
 import AnnouncementCard from "@/components/AnnouncementCard";
+import Ticket from "@/components/Ticket";
 
 const MyTicketsPage = () => {
     const {user} = useUser();
@@ -31,9 +32,11 @@ const MyTicketsPage = () => {
             {upcomingTickets.length > 0 && (
                 <div className="flex flex-col space-y-4">
                     <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Upcoming events</div>
-                    <div>
+                    <div className="flex flex-col space-y-4">
                         {upcomingTickets.map((ticket) => (
-                            <TicketCard key={ticket._id} ticketId={ticket._id}/>
+                            <React.Fragment key={ticket._id}>
+                                <Ticket ticketId={ticket._id}/>
+                            </React.Fragment>
                         ))}
                     </div>
                 </div>
@@ -42,9 +45,11 @@ const MyTicketsPage = () => {
             {pastTickets.length > 0 && (
                 <div>
                     <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Past events</div>
-                    <div>
+                    <div className="flex flex-col space-y-4">
                         {pastTickets.map((ticket) => (
-                            <TicketCard key={ticket._id} ticketId={ticket._id}/>
+                            <React.Fragment key={ticket._id}>
+                                <Ticket ticketId={ticket._id}/>
+                            </React.Fragment>
                         ))}
                     </div>
                 </div>
@@ -53,7 +58,7 @@ const MyTicketsPage = () => {
             {otherTickets.length > 0 && (
                 <div>
                     <div className="text-xl lg:text-2xl xl:text-3xl font-medium">Other tickets</div>
-                    <div>
+                    <div className="flex flex-col space-y-4">
                         {otherTickets.map((ticket) => (
                             <TicketCard key={ticket._id} ticketId={ticket._id}/>
                         ))}
