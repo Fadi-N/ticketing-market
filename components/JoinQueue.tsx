@@ -90,15 +90,18 @@ const JoinQueue = ({eventId, userId}: JoinQueueProps) => {
                         />
                     )}
 
-                        {isPastEvent && (
-                            <AnnouncementCard
-                                icon={<CalendarClock className="w-12 h-12 lg:w-20 lg:h-20"/>}
-                                title="Event has ended"
-                                customClass="bg-red-100 text-red-500 w-full"
-                            />
-                        )}
+                    {isPastEvent && (
+                        <AnnouncementCard
+                            icon={<CalendarClock className="w-12 h-12 lg:w-20 lg:h-20"/>}
+                            title="Event has ended"
+                            customClass="bg-red-100 text-red-500 w-full"
+                        />
+                    )}
 
-                        {availability.purchasedCount < availability.totalTickets && (
+                    {event.salesStart <= Date.now() &&
+                        event.salesEnd >= Date.now() &&
+                        availability.purchasedCount < availability.totalTickets &&
+                        !isEventOwner && (
                             <Button
                                 className="w-full rounded-full"
                                 onClick={handleJoinQueue}
@@ -107,7 +110,8 @@ const JoinQueue = ({eventId, userId}: JoinQueueProps) => {
                                 <Coins width={20} height={20}/>
                                 Buy Ticket
                             </Button>
-                        )}
+                        )
+                    }
                 </>
             )}
 
