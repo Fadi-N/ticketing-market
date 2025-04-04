@@ -67,7 +67,7 @@ const SellerEventCard = ({event}: SellerEventCardProps) => {
                     <AnnouncementCard
                         icon={<Ban className="w-12 h-12 lg:w-20 lg:h-20"/>}
                         title="Cancelled!"
-                        customClass="bg-red-100 text-red-500"
+                        customClass="bg-red-100 text-red-500 w-full"
                     />
                 )}
             </CardFooter>
